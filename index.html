@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Around The U.S.</title>
+    <link rel="stylesheet" type="text/css" href="./pages/index.css" />
+  </head>
+  <body class="root">
+    <div class="page">
+      <header class="header">
+        <img
+          src="./images/Vector.svg"
+          alt="Around the U.S."
+          class="header__title"
+        />
+      </header>
+      <main>
+        <section class="profile">
+          <img
+            src="./images/jacques.jpg"
+            alt="Jacques Cousteau"
+            class="profile__avatar"
+          />
+          <div class="profile__profile-info">
+            <div class="profile__name-wrapper">
+              <p class="profile__name">Jacques Cousteau</p>
+              <button class="button profile__edit-button"></button>
+            </div>
+            <p class="profile__title">Explorer</p>
+          </div>
+          <button class="button profile__add-button"></button>
+        </section>
+
+        <section class="places">
+          <div class="places__card">
+            <img
+              src="./images/yosemite.jpg"
+              alt="Yosemite Valley"
+              class="places__image"
+            />
+            <div class="places__bottom">
+              <h2 class="places__title">Yosemite Valley</h2>
+              <button class="button places__like-button"></button>
+            </div>
+          </div>
+
+          <div class="places__card">
+            <img
+              src="./images/louise.jpg"
+              alt="Lake Louise"
+              class="places__image"
+            />
+            <div class="places__bottom">
+              <h2 class="places__title">Lake Louise</h2>
+              <button class="button places__like-button"></button>
+            </div>
+          </div>
+
+          <div class="places__card">
+            <img
+              src="./images/mountain.jpg"
+              alt="Bald Mountains"
+              class="places__image"
+            />
+            <div class="places__bottom">
+              <h2 class="places__title">Bald Mountains</h2>
+              <button class="button places__like-button"></button>
+            </div>
+          </div>
+
+          <div class="places__card">
+            <img
+              src="./images/latemar.jpg"
+              alt="Latemar"
+              class="places__image"
+            />
+            <div class="places__bottom">
+              <h2 class="places__title">Latemar</h2>
+              <button class="button places__like-button"></button>
+            </div>
+          </div>
+
+          <div class="places__card">
+            <img
+              src="./images/vanoise.jpg"
+              alt="Vanoise National Park"
+              class="places__image"
+            />
+            <div class="places__bottom">
+              <h2 class="places__title">Vanoise National Park</h2>
+              <button class="button places__like-button"></button>
+            </div>
+          </div>
+
+          <div class="places__card">
+            <img
+              src="./images/lago.png"
+              alt="Lago di Braies"
+              class="places__image"
+            />
+            <div class="places__bottom">
+              <h2 class="places__title">Lago di Braies</h2>
+              <button class="button places__like-button"></button>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="footer">
+        <p class="footer__paragraph">© 2021 Around The U.S.</p>
+      </footer>
+    </div>
+
+    <section class="form">
+      <div class="form__container">
+        <button type="submit" class="button form__close-button"></button>
+        <form class="form__edit-profile">
+          <h3 class="form__title">Edit profile</h3>
+          <input
+            type="text"
+            placeholder="Name"
+            class="form__input form__input_type_name"
+            name="ProfileName"
+          />
+          <input
+            type="text"
+            placeholder="Title"
+            class="form__input form__input_type_title"
+            name="ProfileTitle"
+          />
+          <button type="submit" class="button form__save-button">Save</button>
+        </form>
+      </div>
+    </section>
+    <script src="./scripts/script.js"></script>
+  </body>
+</html>

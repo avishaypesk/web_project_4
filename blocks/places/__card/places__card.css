@@ -1,0 +1,10 @@
+.places__card {
+  margin: 0;
+  position: relative;
+  max-width: 282px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+}
