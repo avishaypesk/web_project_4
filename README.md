@@ -6,6 +6,10 @@ This is my 4rd project at Practicum.
 In this project I've created a responsive website according to a desgin.
 The site is written in HTML and CSS Javascript.
 
-**Link**
+**Figma**
 
-A link to the site on github pages -
+[Link to the project in Figma](https://www.figma.com/file/SurN1jaeEQIhuZEDMhmWWf/Sprint-4-Around-The-U.S.-desktop-mobile?node-id=0%3A1)
+
+**Github Pages**
+
+[Link to the project in Github pages]()
