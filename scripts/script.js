@@ -7,7 +7,6 @@ let userInputTitle = document.querySelector(".form__input_type_title");
 let profileName = document.querySelector(".profile__name");
 let profileTitle = document.querySelector(".profile__title");
 let profileForm = document.querySelector(".form");
-let likeButton = document.querySelectorAll(".places__like-button");
 
 function openForm(form) {
   form.classList.add("form_visible");
@@ -28,14 +27,6 @@ function handleEditFormSubmit(event) {
   profileName.textContent = userInputName.value;
   profileTitle.textContent = userInputTitle.value;
   closeForm(profileForm);
-}
-
-function handleLikeButtonClick(event) {
-  event.target.classList.toggle("places__like-button_active");
-}
-
-for (let i = 0; i < likeButton.length; i++) {
-  likeButton[i].addEventListener("click", handleLikeButtonClick);
 }
 
 editProfileButtonElement.addEventListener("click", handleEditButtonClick);
