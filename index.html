@@ -25,7 +25,7 @@
           />
           <div class="profile__profile-info">
             <div class="profile__name-wrapper">
-              <p class="profile__name">Jacques Cousteau</p>
+              <h2 class="profile__name">Jacques Cousteau</h2>
               <button class="button profile__edit-button"></button>
             </div>
             <p class="profile__title">Explorer</p>
@@ -34,7 +34,7 @@
         </section>
 
         <section class="places">
-          <div class="places__card">
+          <article class="places__card">
             <img
               src="./images/yosemite.jpg"
               alt="Yosemite Valley"
@@ -44,9 +44,9 @@
               <h2 class="places__title">Yosemite Valley</h2>
               <button class="button places__like-button"></button>
             </div>
-          </div>
+          </article>
 
-          <div class="places__card">
+          <article class="places__card">
             <img
               src="./images/louise.jpg"
               alt="Lake Louise"
@@ -56,9 +56,9 @@
               <h2 class="places__title">Lake Louise</h2>
               <button class="button places__like-button"></button>
             </div>
-          </div>
+          </article>
 
-          <div class="places__card">
+          <article class="places__card">
             <img
               src="./images/mountain.jpg"
               alt="Bald Mountains"
@@ -68,9 +68,9 @@
               <h2 class="places__title">Bald Mountains</h2>
               <button class="button places__like-button"></button>
             </div>
-          </div>
+          </article>
 
-          <div class="places__card">
+          <article class="places__card">
             <img
               src="./images/latemar.jpg"
               alt="Latemar"
@@ -80,9 +80,9 @@
               <h2 class="places__title">Latemar</h2>
               <button class="button places__like-button"></button>
             </div>
-          </div>
+          </article>
 
-          <div class="places__card">
+          <article class="places__card">
             <img
               src="./images/vanoise.jpg"
               alt="Vanoise National Park"
@@ -92,9 +92,9 @@
               <h2 class="places__title">Vanoise National Park</h2>
               <button class="button places__like-button"></button>
             </div>
-          </div>
+          </article>
 
-          <div class="places__card">
+          <article class="places__card">
             <img
               src="./images/lago.png"
               alt="Lago di Braies"
@@ -104,9 +104,10 @@
               <h2 class="places__title">Lago di Braies</h2>
               <button class="button places__like-button"></button>
             </div>
-          </div>
+          </article>
         </section>
       </main>
+
       <footer class="footer">
         <p class="footer__paragraph">© 2021 Around The U.S.</p>
       </footer>
@@ -114,20 +115,20 @@
 
     <section class="form">
       <div class="form__container">
-        <button type="submit" class="button form__close-button"></button>
-        <form class="form__edit-profile">
+        <button type="button" class="button form__close-button"></button>
+        <form class="form__edit-profile" name="profileForm">
           <h3 class="form__title">Edit profile</h3>
           <input
             type="text"
             placeholder="Name"
             class="form__input form__input_type_name"
-            name="ProfileName"
+            name="profileName"
           />
           <input
             type="text"
             placeholder="Title"
             class="form__input form__input_type_title"
-            name="ProfileTitle"
+            name="profileTitle"
           />
           <button type="submit" class="button form__save-button">Save</button>
         </form>

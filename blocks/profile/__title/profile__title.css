@@ -1,6 +1,10 @@
 .profile__title {
+  max-width: 100%;
   font-size: 18px;
   margin: 16px 0 0 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 @media screen and (max-width: 320px) {

@@ -5,12 +5,12 @@
   font-weight: 400;
   src: local(""), url("../fonts/inter-v7-latin-regular.ttf") format("truetype");
 }
-/* inter-600 - latin */
+/* inter-500 - latin */
 @font-face {
   font-family: "Inter";
   font-style: normal;
-  font-weight: 600;
-  src: local(""), url("../fonts/inter-v7-latin-600.ttf") format("truetype");
+  font-weight: 500;
+  src: local(""), url("../fonts/inter-v7-latin-500.ttf") format("truetype");
 }
 /* inter-900 - latin */
 @font-face {
