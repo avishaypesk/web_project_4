@@ -8,6 +8,8 @@
   width: 150px;
   margin-left: auto;
   border: white solid 2px;
+  box-sizing: border-box;
+  border-radius: 2px;
 }
 
 @media screen and (max-width: 650px) {

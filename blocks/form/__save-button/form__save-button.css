@@ -14,8 +14,6 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 @media screen and (max-width: 600px) {
@@ -23,6 +21,12 @@
     height: 46px;
     font-size: 14px;
     line-height: 17px;
-    text-align: center;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .form__save-button {
+    margin-bottom: 25px;
+    margin-top: 46px;
   }
 }
