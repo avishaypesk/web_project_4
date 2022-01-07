@@ -30,3 +30,7 @@
     margin-top: 46px;
   }
 }
+
+.form__save-button:hover {
+  opacity: 0.8;
+}

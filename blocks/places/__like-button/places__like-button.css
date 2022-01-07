@@ -9,3 +9,7 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+.places__like-button:hover {
+  opacity: 0.5;
+}
