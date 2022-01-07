@@ -6,7 +6,8 @@ let userInputName = document.querySelector(".form__input_type_name");
 let userInputTitle = document.querySelector(".form__input_type_title");
 let profileName = document.querySelector(".profile__name");
 let profileTitle = document.querySelector(".profile__title");
-let profileForm = document.querySelector(".form");
+let popup = document.querySelector(".form");
+let profileForm = document.querySelector(".form__edit-profile");
 
 function openForm(form) {
   form.classList.add("form_visible");
@@ -19,18 +20,16 @@ function closeForm(form) {
 function handleEditButtonClick() {
   userInputName.value = profileName.textContent;
   userInputTitle.value = profileTitle.textContent;
-  openForm(profileForm);
+  openForm(popup);
 }
 
 function handleEditFormSubmit(event) {
   event.preventDefault();
   profileName.textContent = userInputName.value;
   profileTitle.textContent = userInputTitle.value;
-  closeForm(profileForm);
+  closeForm(popup);
 }
 
 editProfileButtonElement.addEventListener("click", handleEditButtonClick);
 profileForm.addEventListener("submit", handleEditFormSubmit);
-profileFormCloseButtonElement.addEventListener("click", () =>
-  closeForm(profileForm)
-);
+profileFormCloseButtonElement.addEventListener("click", () => closeForm(popup));
