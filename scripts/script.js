@@ -1,4 +1,4 @@
-const initialCards = [
+const cards = [
   {
     name: "Yosemite Valley",
     link: "./images/yosemite.jpg",
@@ -44,6 +44,31 @@ const previewPopupDesc = document.querySelector(".preview__description");
 const profileForm = document.querySelector(".form__edit-profile");
 const newCardForm = document.querySelector(".form__new-card");
 const popups = document.querySelectorAll(".popup");
+const cardTemplate = document.querySelector("#card-template").content;
+
+function createCard(card) {
+  const cardElement = cardTemplate
+    .querySelector(".places__card")
+    .cloneNode(true);
+  const cardImageElement = cardElement.querySelector(".places__image");
+  const cardRemoveButtonElement = cardElement.querySelector(
+    ".places__remove-button"
+  );
+  const cardTitleElement = cardElement.querySelector(".places__title");
+  const cardLikeButtonElement = cardElement.querySelector(
+    ".places__like-button"
+  );
+
+  cardImageElement.addEventListener("click", handleViewPreview);
+  cardRemoveButtonElement.addEventListener("click", handleRemoveButtonClick);
+  cardLikeButtonElement.addEventListener("click", handleLikeButtonClick);
+
+  cardImageElement.src = card.link;
+  cardImageElement.alt = card.name;
+  cardTitleElement.textContent = card.name;
+
+  return cardElement;
+}
 
 function openPopup(popup) {
   popup.classList.add("popup_visible");
@@ -73,8 +98,16 @@ function handleNewCardButtonClick() {
 function handleViewPreview(evt) {
   previewPopupImage.src = evt.taget.src;
   previewPopupImage.alt = evt.taget.alt;
-  previewPopupDesc.textContent = evt.taget.textContent;
+  previewPopupDesc.textContent = evt.taget.alt;
   openPopup(previewPopup);
+}
+
+function handleRemoveButtonClick(evt) {
+  evt.target.closest(".places__card").remove();
+}
+
+function handleLikeButtonClick(evt) {
+  evt.target.classList.toggle(".places__like-button_active");
 }
 
 editProfileButtonElement.addEventListener("click", handleEditButtonClick);

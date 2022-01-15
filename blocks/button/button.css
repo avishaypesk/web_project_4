@@ -3,6 +3,7 @@
   transition: opacity 0.3s ease-out;
   padding: 0;
   opacity: 1;
+  border: none;
 }
 
 .button:hover {
