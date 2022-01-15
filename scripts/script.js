@@ -38,16 +38,19 @@ const profileName = document.querySelector(".profile__name");
 const profileTitle = document.querySelector(".profile__title");
 const profilePopup = document.querySelector(".form_type_profile");
 const newCardPopup = document.querySelector(".form_type_new-card");
+const previewPopup = document.querySelector(".preview");
+const previewPopupImage = document.querySelector(".preview__preview-image");
+const previewPopupDesc = document.querySelector(".preview__description");
 const profileForm = document.querySelector(".form__edit-profile");
 const newCardForm = document.querySelector(".form__new-card");
-const popups = document.querySelectorAll(".form");
+const popups = document.querySelectorAll(".popup");
 
 function openPopup(popup) {
-  popup.classList.add("form_visible");
+  popup.classList.add("popup_visible");
 }
 
 function closePopup(popup) {
-  popup.classList.remove("form_visible");
+  popup.classList.remove("popup_visible");
 }
 
 function handleEditButtonClick() {
@@ -67,12 +70,19 @@ function handleNewCardButtonClick() {
   openPopup(newCardPopup);
 }
 
+function handleViewPreview(evt) {
+  previewPopupImage.src = evt.taget.src;
+  previewPopupImage.alt = evt.taget.alt;
+  previewPopupDesc.textContent = evt.taget.textContent;
+  openPopup(previewPopup);
+}
+
 editProfileButtonElement.addEventListener("click", handleEditButtonClick);
 profileForm.addEventListener("submit", handleEditFormSubmit);
 newCardButtonElement.addEventListener("click", handleNewCardButtonClick);
 popups.forEach((popup) => {
   popup.addEventListener("click", (evt) => {
-    if (evt.target.classList.contains("form_visible")) {
+    if (evt.target.classList.contains("popup_visible")) {
       closePopup(popup);
     }
     if (evt.target.classList.contains("form__close-button")) {

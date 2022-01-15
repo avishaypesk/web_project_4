@@ -1,0 +1,13 @@
+.preview__window {
+  position: relative;
+  width: fit-content;
+  max-width: 75vw;
+  max-height: 75vh;
+  margin: auto;
+}
+
+@media screen and (max-width: 500px) {
+  .preview__window {
+    margin: auto;
+  }
+}
