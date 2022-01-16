@@ -1,27 +1,27 @@
 const cards = [
   {
-    name: "Yosemite Valley",
-    link: "./images/yosemite.jpg",
-  },
-  {
-    name: "Lake louise",
-    link: "./images/louise.jpg",
-  },
-  {
-    name: "Bald Mountains",
-    link: "./images/mountain.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "./images/latemar.jpg",
+    name: "Lago di Braies",
+    link: "./images/lago.png",
   },
   {
     name: "Vanoise National Park",
     link: "./images/vanoise.jpg",
   },
   {
-    name: "Lago di Braies",
-    link: "./images/lago.png",
+    name: "Latemar",
+    link: "./images/latemar.jpg",
+  },
+  {
+    name: "Bald Mountains",
+    link: "./images/mountain.jpg",
+  },
+  {
+    name: "Lake Louise",
+    link: "./images/louise.jpg",
+  },
+  {
+    name: "Yosemite Valley",
+    link: "./images/yosemite.jpg",
   },
 ];
 
@@ -45,6 +45,9 @@ const profileForm = document.querySelector(".form__edit-profile");
 const newCardForm = document.querySelector(".form__new-card");
 const popups = document.querySelectorAll(".popup");
 const cardTemplate = document.querySelector("#card-template").content;
+const cardsSection = document.querySelector(".places");
+const userInputImgTitle = document.querySelector(".form__input_type_img-title");
+const userInputImgLink = document.querySelector(".form__input_type_img-link");
 
 function createCard(card) {
   const cardElement = cardTemplate
@@ -68,6 +71,14 @@ function createCard(card) {
   cardTitleElement.textContent = card.name;
 
   return cardElement;
+}
+
+function renderCard(card) {
+  cardsSection.prepend(createCard(card));
+}
+
+function renderCards() {
+  cards.forEach((card) => renderCard(card));
 }
 
 function openPopup(popup) {
@@ -95,10 +106,17 @@ function handleNewCardButtonClick() {
   openPopup(newCardPopup);
 }
 
+function handleNewCardButtonSubmit(evt) {
+  evt.preventDefault();
+  const card = { name: userInputImgTitle.value, link: userInputImgLink.value };
+  renderCard(card);
+  closePopup(newCardPopup);
+}
+
 function handleViewPreview(evt) {
-  previewPopupImage.src = evt.taget.src;
-  previewPopupImage.alt = evt.taget.alt;
-  previewPopupDesc.textContent = evt.taget.alt;
+  previewPopupImage.src = evt.currentTarget.src;
+  previewPopupImage.alt = evt.currentTarget.alt;
+  previewPopupDesc.textContent = evt.currentTarget.alt;
   openPopup(previewPopup);
 }
 
@@ -107,11 +125,12 @@ function handleRemoveButtonClick(evt) {
 }
 
 function handleLikeButtonClick(evt) {
-  evt.target.classList.toggle(".places__like-button_active");
+  evt.target.classList.toggle("places__like-button_active");
 }
 
 editProfileButtonElement.addEventListener("click", handleEditButtonClick);
 profileForm.addEventListener("submit", handleEditFormSubmit);
+newCardForm.addEventListener("submit", handleNewCardButtonSubmit);
 newCardButtonElement.addEventListener("click", handleNewCardButtonClick);
 popups.forEach((popup) => {
   popup.addEventListener("click", (evt) => {
@@ -123,3 +142,5 @@ popups.forEach((popup) => {
     }
   });
 });
+
+renderCards();
