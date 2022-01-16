@@ -137,7 +137,7 @@ popups.forEach((popup) => {
     if (evt.target.classList.contains("popup_visible")) {
       closePopup(popup);
     }
-    if (evt.target.classList.contains("form__close-button")) {
+    if (evt.target.classList.contains("popup__close-button")) {
       closePopup(popup);
     }
   });
