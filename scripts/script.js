@@ -1,29 +1,31 @@
-const cards = [
+const initialCards = [
   {
-    name: "Lago di Braies",
-    link: "./images/lago.png",
-  },
-  {
-    name: "Vanoise National Park",
-    link: "./images/vanoise.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "./images/latemar.jpg",
-  },
-  {
-    name: "Bald Mountains",
-    link: "./images/mountain.jpg",
+    name: "Yosemite Valley",
+    link: "https://code.s3.yandex.net/web-code/yosemite.jpg",
   },
   {
     name: "Lake Louise",
-    link: "./images/louise.jpg",
+    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg",
   },
   {
-    name: "Yosemite Valley",
-    link: "./images/yosemite.jpg",
+    name: "Bald Mountains",
+    link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg",
+  },
+  {
+    name: "Latemar",
+    link: "https://code.s3.yandex.net/web-code/latemar.jpg",
+  },
+  {
+    name: "Vanoise National Park",
+    link: "https://code.s3.yandex.net/web-code/vanoise.jpg",
+  },
+  {
+    name: "Lago di Braies",
+    link: "https://code.s3.yandex.net/web-code/lago.jpg",
   },
 ];
+
+initialCards.reverse();
 
 const editProfileButtonElement = document.querySelector(
   ".profile__edit-button"
@@ -78,7 +80,7 @@ function renderCard(card) {
 }
 
 function renderCards() {
-  cards.forEach((card) => renderCard(card));
+  initialCards.forEach((card) => renderCard(card));
 }
 
 function openPopup(popup) {
