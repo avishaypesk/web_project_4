@@ -6,7 +6,16 @@
   gap: 16px;
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 880px) {
+  .places {
+    row-gap: 20px;
+    max-width: min-content;
+    margin: 36px auto 0;
+    grid-template-columns: repeat(2, max-content);
+  }
+}
+
+@media screen and (max-width: 580px) {
   .places {
     row-gap: 20px;
     margin: 36px auto 0;

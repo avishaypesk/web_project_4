@@ -48,8 +48,10 @@ const newCardForm = document.querySelector(".form__new-card");
 const popups = document.querySelectorAll(".popup");
 const cardTemplate = document.querySelector("#card-template").content;
 const cardsSection = document.querySelector(".places");
-const userInputImgTitle = document.querySelector(".form__input_type_img-title");
-const userInputImgLink = document.querySelector(".form__input_type_img-link");
+const userInputImageTitle = document.querySelector(
+  ".form__input_type_img-title"
+);
+const userInputImageLink = document.querySelector(".form__input_type_img-link");
 
 function createCard(card) {
   const cardElement = cardTemplate
@@ -110,9 +112,13 @@ function handleNewCardButtonClick() {
 
 function handleNewCardButtonSubmit(evt) {
   evt.preventDefault();
-  const card = { name: userInputImgTitle.value, link: userInputImgLink.value };
+  const card = {
+    name: userInputImageTitle.value,
+    link: userInputImageLink.value,
+  };
   renderCard(card);
   closePopup(newCardPopup);
+  newCardForm.reset();
 }
 
 function handleViewPreview(evt) {

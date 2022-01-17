@@ -5,8 +5,15 @@
   color: #545454;
 }
 
+@media screen and (max-width: 880px) {
+  .footer__paragraph {
+    text-align: center;
+  }
+}
+
 @media screen and (max-width: 320px) {
   .footer__paragraph {
+    text-align: left;
     font-size: 14px;
   }
 }
