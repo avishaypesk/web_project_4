@@ -6,13 +6,11 @@
   color: #000;
   width: 100%;
   height: 27px;
-  margin-top: 29px;
   box-sizing: border-box;
 }
 
 @media screen and (max-width: 320px) {
   .form__input {
     height: 26px;
-    margin-top: 30px;
   }
 }

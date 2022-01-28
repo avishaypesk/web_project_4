@@ -87,10 +87,12 @@ function renderCards() {
 
 function openPopup(popup) {
   popup.classList.add("popup_visible");
+  document.addEventListener("keydown", handleEscKeydown);
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup_visible");
+  document.removeEventListener("keydown", handleEscKeydown);
 }
 
 function handleEditButtonClick() {
@@ -134,6 +136,17 @@ function handleRemoveButtonClick(evt) {
 
 function handleLikeButtonClick(evt) {
   evt.target.classList.toggle("places__like-button_active");
+}
+
+function handleEscKeydown(evt) {
+  if (evt.key == "Escape") {
+    const popup = document.querySelector(".popup_visible");
+    closePopup(popup);
+  }
+}
+
+function handlePopupMouseDown(evt) {
+  if (evt.target === evt.currentTarget) closePopup(evt.target);
 }
 
 editProfileButtonElement.addEventListener("click", handleEditButtonClick);

@@ -58,13 +58,20 @@
     <div class="popup form form_type_profile">
       <div class="form__container form__container_type_profile">
         <button type="button" class="button popup__close-button"></button>
-        <form class="form__edit-profile" name="profileForm">
+        <form
+          class="form__edit-profile popup__form"
+          name="profileForm"
+          novalidate
+        >
           <h3 class="form__title">Edit profile</h3>
           <input
             type="text"
             placeholder="Name"
             class="form__input form__input_type_name"
             name="profileName"
+            minlength="2"
+            maxlength="40"
+            required
           />
           <span id="name-input-error" class="form__input-error"></span>
           <input
@@ -72,6 +79,9 @@
             placeholder="Title"
             class="form__input form__input_type_title"
             name="profileTitle"
+            minlength="2"
+            maxlength="200"
+            required
           />
           <span id="title-input-error" class="form__input-error"></span>
           <button type="submit" class="button form__save-button">Save</button>
@@ -82,7 +92,7 @@
     <div class="popup form form_type_new-card">
       <div class="form__container form__container_type_new-card">
         <button type="button" class="button popup__close-button"></button>
-        <form class="form__new-card" name="newCardForm">
+        <form class="form__new-card popup__form" name="newCardForm" novalidate>
           <h3 class="form__title">New place</h3>
           <input
             type="text"
@@ -90,6 +100,8 @@
             class="form__input form__input_type_img-title"
             name="newCardName"
             required
+            minlength="1"
+            maxlength="30"
           />
           <span id="img-title-input-error" class="form__input-error"></span>
           <input
@@ -112,7 +124,7 @@
         <p class="preview__description"></p>
       </div>
     </div>
-
-    <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js" defer></script>
+    <script src="./scripts/index.js" defer></script>
   </body>
 </html>
