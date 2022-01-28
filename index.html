@@ -66,12 +66,14 @@
             class="form__input form__input_type_name"
             name="profileName"
           />
+          <span id="name-input-error" class="form__input-error"></span>
           <input
             type="text"
             placeholder="Title"
             class="form__input form__input_type_title"
             name="profileTitle"
           />
+          <span id="title-input-error" class="form__input-error"></span>
           <button type="submit" class="button form__save-button">Save</button>
         </form>
       </div>
@@ -89,6 +91,7 @@
             name="newCardName"
             required
           />
+          <span id="img-title-input-error" class="form__input-error"></span>
           <input
             type="url"
             placeholder="Image link"
@@ -96,6 +99,7 @@
             name="newCardLink"
             required
           />
+          <span id="img-link-input-error" class="form__input-error"></span>
           <button type="submit" class="button form__save-button">Create</button>
         </form>
       </div>
