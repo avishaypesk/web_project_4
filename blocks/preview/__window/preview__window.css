@@ -3,13 +3,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  max-width: 75vw;
-  max-height: 75vh;
+  max-width: 50vw;
+  max-height: 100vh;
   margin: auto;
-}
-
-@media screen and (max-width: 500px) {
-  .preview__window {
-    margin: auto;
-  }
 }
