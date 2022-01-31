@@ -121,6 +121,7 @@ function handleNewCardButtonSubmit(evt) {
   renderCard(card);
   closePopup(newCardPopup);
   newCardForm.reset();
+  toggleButtonState;
 }
 
 function handleViewPreview(evt) {
@@ -145,16 +146,12 @@ function handleEscKeydown(evt) {
   }
 }
 
-function handlePopupMouseDown(evt) {
-  if (evt.target === evt.currentTarget) closePopup(evt.target);
-}
-
 editProfileButtonElement.addEventListener("click", handleEditButtonClick);
 profileForm.addEventListener("submit", handleEditFormSubmit);
 newCardForm.addEventListener("submit", handleNewCardButtonSubmit);
 newCardButtonElement.addEventListener("click", handleNewCardButtonClick);
 popups.forEach((popup) => {
-  popup.addEventListener("click", (evt) => {
+  popup.addEventListener("mousedown", (evt) => {
     if (evt.target.classList.contains("popup_visible")) {
       closePopup(popup);
     }
