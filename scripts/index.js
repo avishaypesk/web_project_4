@@ -121,7 +121,8 @@ function handleNewCardButtonSubmit(evt) {
   renderCard(card);
   closePopup(newCardPopup);
   newCardForm.reset();
-  toggleButtonState;
+  evt.submitter.classList.add("button_disabled");
+  evt.submitter.disabled = true;
 }
 
 function handleViewPreview(evt) {
