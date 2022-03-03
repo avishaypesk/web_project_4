@@ -31,8 +31,11 @@ export class FormValidator {
   }
 
   _checkInputValidity(inputElement) {
-    if (inputElement.validity.valid) this._removeInputError(inputElement);
-    else this._showInputError(inputElement);
+    if (inputElement.validity.valid) {
+      this._removeInputError(inputElement);
+    } else {
+      this._showInputError(inputElement);
+    }
   }
 
   _toggleButtonState() {

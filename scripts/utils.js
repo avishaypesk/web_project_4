@@ -23,7 +23,7 @@ function closePopup(popup) {
 
 function handleKeyDownOnPopup(event) {
   if (event.key == "Escape") {
-    const popup = document.querySelector(".popup_active");
+    const popup = document.querySelector(".popup_visible");
     closePopup(popup);
   }
 }
