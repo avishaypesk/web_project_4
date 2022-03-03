@@ -51,28 +51,24 @@ export class Card {
     cardImageElement.alt = this._name;
   }
 
-  _handleLikeButtonClick() {
+  _handleLikeButtonClick = () => {
     this._likeButton.classList.toggle(this._likeActiveSelector);
-  }
+  };
 
-  _handleDeleteButtonClick() {
+  _handleDeleteButtonClick = () => {
     this._cardElement.remove();
-  }
+  };
 
   _setEventListeners() {
     this._likeButton = this._cardElement.querySelector(
       this._likeButtonSelector
     );
-    this._likeButton.addEventListener("click", () =>
-      this._handleLikeButtonClick()
-    );
+    this._likeButton.addEventListener("click", this._handleLikeButtonClick);
 
     const deleteButton = this._cardElement.querySelector(
       this._deleteButtonSelector
     );
-    deleteButton.addEventListener("click", () =>
-      this._handleDeleteButtonClick()
-    );
+    deleteButton.addEventListener("click", this._handleDeleteButtonClick);
 
     const image = this._cardElement.querySelector(this._imageSelector);
     image.addEventListener("click", () => {
@@ -80,11 +76,12 @@ export class Card {
       const previewImage = document.querySelector(
         this._previewPopupImageSelector
       );
-      const previewDesc = document.querySelector(
+      const previewDescription = document.querySelector(
         this._previewPopupDescriptionSelector
       );
       previewImage.src = this._link;
-      previewDesc.textContent = this._name;
+      previewImage.alt = this._name;
+      previewDescription.textContent = this._name;
       this._handleCardClick(preview);
     });
   }
