@@ -1,0 +1,19 @@
+{
+  "name": "web_project_4",
+  "version": "1.0.0",
+  "description": "**Description**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avishaypesk/web_project_4.git"
+  },
+  "author": "Avishay Peskin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/avishaypesk/web_project_4/issues"
+  },
+  "homepage": "https://github.com/avishaypesk/web_project_4#readme"
+}
