@@ -13,7 +13,7 @@ export default class UserInfo {
     };
   }
 
-  getUserInfo({ name, title }) {
+  setUserInfo({ name, title }) {
     this._nameElement.textContent = name;
     this._titleElement.textContent = title;
   }

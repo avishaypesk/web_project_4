@@ -1,13 +1,24 @@
 export class FormValidator {
-  constructor(config, form) {
-    this._formSelector = config.formSelector;
-    this._inputSelector = config.inputSelector;
-    this._errorClass = config.errorClass;
-    this._inactiveButtonClass = config.inactiveButtonClass;
-    this._inputErrorClass = config.inputErrorClass;
-    this._submitButtonSelector = config.submitButtonSelector;
+  constructor(
+    {
+      formSelector,
+      inputSelector,
+      errorClass,
+      inactiveButtonClass,
+      inputErrorClass,
+      submitButtonSelector,
+      previewPopupSelector,
+    },
+    form
+  ) {
+    this._formSelector = formSelector;
+    this._inputSelector = inputSelector;
+    this._errorClass = errorClass;
+    this._inactiveButtonClass = inactiveButtonClass;
+    this._inputErrorClass = inputErrorClass;
+    this._submitButtonSelector = submitButtonSelector;
     this._form = form;
-    this._previewPopupSelector = config.previewPopupSelector;
+    this._previewPopupSelector = previewPopupSelector;
   }
 
   _showInputError(inputElement) {
@@ -71,6 +82,5 @@ export class FormValidator {
 
   enableValidation() {
     this._setFormListeners();
-    this._form.addEventListener("submit", (event) => event.preventDefault());
   }
 }

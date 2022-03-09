@@ -48,8 +48,6 @@ export const profileForm = document.querySelector(".form__edit-profile");
 export const newCardForm = document.querySelector(".form__new-card");
 export const userInputName = document.querySelector(".form__input_type_name");
 export const userInputTitle = document.querySelector(".form__input_type_title");
-export const profileName = document.querySelector(".profile__name");
-export const profileTitle = document.querySelector(".profile__title");
 export const userInputImageTitle = document.querySelector(
   ".form__input_type_img-title"
 );

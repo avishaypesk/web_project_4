@@ -71,18 +71,8 @@ export class Card {
     deleteButton.addEventListener("click", this._handleDeleteButtonClick);
 
     const image = this._cardElement.querySelector(this._imageSelector);
-    image.addEventListener("click", () => {
-      const preview = document.querySelector(this._previewPopupSelector);
-      const previewImage = document.querySelector(
-        this._previewPopupImageSelector
-      );
-      const previewDescription = document.querySelector(
-        this._previewPopupDescriptionSelector
-      );
-      previewImage.src = this._link;
-      previewImage.alt = this._name;
-      previewDescription.textContent = this._name;
-      this._handleCardClick(preview);
+    image.addEventListener("click", (event) => {
+      this._handleCardClick(event);
     });
   }
 
