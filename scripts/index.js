@@ -1,62 +1,23 @@
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
 import PopupWithForm from "./PopupWithForm.js";
-import { openPopup, closePopup, handleCardClick } from "./utils.js";
-
-export const config = {
-  formSelector: ".form",
-  inputSelector: ".form__input",
-  errorClass: "form__input-error_active",
-  inactiveButtonClass: "button_disabled",
-  inputErrorClass: "form__input_type_error",
-  submitButtonSelector: ".form__save-button",
-};
-
-const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://code.s3.yandex.net/web-code/yosemite.jpg",
-  },
-  {
-    name: "Lake Louise",
-    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg",
-  },
-  {
-    name: "Bald Mountains",
-    link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://code.s3.yandex.net/web-code/latemar.jpg",
-  },
-  {
-    name: "Vanoise National Park",
-    link: "https://code.s3.yandex.net/web-code/vanoise.jpg",
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://code.s3.yandex.net/web-code/lago.jpg",
-  },
-];
-
-initialCards.reverse();
-
-const editProfileButtonElement = document.querySelector(
-  ".profile__edit-button"
-);
-const newCardButtonElement = document.querySelector(".profile__add-button");
-const profileForm = document.querySelector(".form__edit-profile");
-const newCardForm = document.querySelector(".form__new-card");
-const popups = document.querySelectorAll(".popup");
-const cardsSection = document.querySelector(".places");
-const userInputName = document.querySelector(".form__input_type_name");
-const userInputTitle = document.querySelector(".form__input_type_title");
-const profileName = document.querySelector(".profile__name");
-const profileTitle = document.querySelector(".profile__title");
-const userInputImageTitle = document.querySelector(
-  ".form__input_type_img-title"
-);
-const userInputImageLink = document.querySelector(".form__input_type_img-link");
+import { handleCardClick } from "./utils.js";
+import {
+  config,
+  initialCards,
+  newCardButtonElement,
+  cardsSection,
+  editProfileButtonElement,
+  profileForm,
+  newCardForm,
+  userInputName,
+  userInputTitle,
+  profileName,
+  profileTitle,
+  userInputImageTitle,
+  userInputImageLink,
+} from "./constants.js";
+import Section from "./Section.js";
 
 function createCard(card) {
   const newCard = new Card(
@@ -85,9 +46,15 @@ export function renderCard(card) {
   cardsSection.prepend(createCard(card));
 }
 
-function renderCards() {
-  initialCards.forEach((card) => renderCard(card));
-}
+const cardsListSection = new Section(
+  {
+    items: initialCards,
+    renderer: renderCard,
+  },
+  cardsSection
+);
+
+cardsListSection.renderItems();
 
 function handleEditButtonClick() {
   userInputName.value = profileName.textContent;
@@ -119,9 +86,9 @@ function handleNewCardFormSubmit(event) {
 }
 
 editProfileButtonElement.addEventListener("click", handleEditButtonClick);
+newCardButtonElement.addEventListener("click", handleNewCardButtonClick);
 profileForm.addEventListener("submit", handleEditFormSubmit);
 newCardForm.addEventListener("submit", handleNewCardFormSubmit);
-newCardButtonElement.addEventListener("click", handleNewCardButtonClick);
 
 renderCards();
 

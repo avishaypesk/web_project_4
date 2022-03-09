@@ -13,4 +13,5 @@ export function handleCardClick() {
     }
   );
   popup.open();
+  popup.setEventListeners();
 }
