@@ -1,18 +1,16 @@
-function openPopup(popup) {
-  popup.classList.add("popup_visible");
-  document.addEventListener("keydown", handleKeyDownOnPopup);
-}
+import PopupWithImage from "./PopupWithImage.js";
 
-function closePopup(popup) {
-  popup.classList.remove("popup_visible");
-  document.removeEventListener("keydown", handleKeyDownOnPopup);
+export function handleCardClick() {
+  const popup = new PopupWithImage(
+    {
+      name: this._name,
+      link: this._link,
+    },
+    {
+      popupSelector: this._previewPopupSelector,
+      imageSelector: this._previewPopupImageSelector,
+      imageTitleSelector: this._previewPopupDescriptionSelector,
+    }
+  );
+  popup.open();
 }
-
-function handleKeyDownOnPopup(event) {
-  if (event.key == "Escape") {
-    const popup = document.querySelector(".popup_visible");
-    closePopup(popup);
-  }
-}
-
-export { openPopup, closePopup };
