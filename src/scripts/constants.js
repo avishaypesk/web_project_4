@@ -1,3 +1,10 @@
+const yosemite = new URL("../images/yosemite.jpg", import.meta.url);
+const louise = new URL("../images/louise.jpg", import.meta.url);
+const mountain = new URL("../images/mountain.jpg", import.meta.url);
+const latemar = new URL("../images/latemar.jpg", import.meta.url);
+const vanoise = new URL("../images/vanoise.jpg", import.meta.url);
+const lago = new URL("../images/lago.png", import.meta.url);
+
 export const config = {
   formSelector: ".form",
   inputSelector: ".form__input",
@@ -10,27 +17,27 @@ export const config = {
 export const initialCards = [
   {
     name: "Yosemite Valley",
-    link: "https://code.s3.yandex.net/web-code/yosemite.jpg",
+    link: yosemite,
   },
   {
     name: "Lake Louise",
-    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg",
+    link: louise,
   },
   {
     name: "Bald Mountains",
-    link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg",
+    link: mountain,
   },
   {
     name: "Latemar",
-    link: "https://code.s3.yandex.net/web-code/latemar.jpg",
+    link: latemar,
   },
   {
     name: "Vanoise National Park",
-    link: "https://code.s3.yandex.net/web-code/vanoise.jpg",
+    link: vanoise,
   },
   {
     name: "Lago di Braies",
-    link: "https://code.s3.yandex.net/web-code/lago.jpg",
+    link: lago,
   },
 ];
 
@@ -48,8 +55,6 @@ export const profileForm = document.querySelector(".form__edit-profile");
 export const newCardForm = document.querySelector(".form__new-card");
 export const userInputName = document.querySelector(".form__input_type_name");
 export const userInputTitle = document.querySelector(".form__input_type_title");
-export const profileName = document.querySelector(".profile__name");
-export const profileTitle = document.querySelector(".profile__title");
 export const userInputImageTitle = document.querySelector(
   ".form__input_type_img-title"
 );

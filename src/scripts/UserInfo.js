@@ -9,11 +9,11 @@ export default class UserInfo {
   getUserInfo() {
     return {
       name: this._nameElement.textContent,
-      job: this._jobElement.textContent,
+      title: this._titleElement.textContent,
     };
   }
 
-  getUserInfo({ name, title }) {
+  setUserInfo({ name, title }) {
     this._nameElement.textContent = name;
     this._titleElement.textContent = title;
   }
