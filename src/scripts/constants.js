@@ -3,7 +3,7 @@ const louise = new URL("../images/louise.jpg", import.meta.url);
 const mountain = new URL("../images/mountain.jpg", import.meta.url);
 const latemar = new URL("../images/latemar.jpg", import.meta.url);
 const vanoise = new URL("../images/vanoise.jpg", import.meta.url);
-const lago = new URL("../images/lago.png", import.meta.url);
+const lago = new URL("../images/lago.jpg", import.meta.url);
 
 export const config = {
   formSelector: ".form",
