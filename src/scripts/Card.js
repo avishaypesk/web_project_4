@@ -9,9 +9,6 @@ export class Card {
       likeButtonSelector,
       likeActiveSelector,
       deleteButtonSelector,
-      previewPopupImageSelector,
-      previewPopupDescriptionSelector,
-      previewPopupSelector,
       handleCardClick,
     }
   ) {
@@ -22,9 +19,6 @@ export class Card {
     this._likeButtonSelector = likeButtonSelector;
     this._likeActiveSelector = likeActiveSelector;
     this._deleteButtonSelector = deleteButtonSelector;
-    this._previewPopupImageSelector = previewPopupImageSelector;
-    this._previewPopupDescriptionSelector = previewPopupDescriptionSelector;
-    this._previewPopupSelector = previewPopupSelector;
     this._handleCardClick = handleCardClick;
 
     this._name = name;
@@ -71,8 +65,8 @@ export class Card {
     deleteButton.addEventListener("click", this._handleDeleteButtonClick);
 
     const image = this._cardElement.querySelector(this._imageSelector);
-    image.addEventListener("click", (event) => {
-      this._handleCardClick(event);
+    image.addEventListener("click", () => {
+      this._handleCardClick(this);
     });
   }
 

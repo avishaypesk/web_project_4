@@ -45,6 +45,12 @@ export const userProfile = new UserInfo({
   titleSelector: ".profile__title",
 });
 
+const preview = new PopupWithImage({
+  popupSelector: ".preview",
+  imageSelector: ".preview__preview-image",
+  imageTitleSelector: ".preview__description",
+});
+
 function createCard(card) {
   const newCard = new Card(
     {
@@ -59,9 +65,6 @@ function createCard(card) {
       likeActiveSelector: "places__like-button_active",
       likeButtonSelector: ".places__like-button",
       deleteButtonSelector: ".places__remove-button",
-      previewPopupSelector: ".preview",
-      previewPopupImageSelector: ".preview__preview-image",
-      previewPopupDescriptionSelector: ".preview__description",
       handleCardClick,
     }
   );
@@ -83,20 +86,9 @@ function enableValidation(config) {
   });
 }
 
-function handleCardClick() {
-  const popup = new PopupWithImage(
-    {
-      name: this._name,
-      link: this._link,
-    },
-    {
-      popupSelector: this._previewPopupSelector,
-      imageSelector: this._previewPopupImageSelector,
-      imageTitleSelector: this._previewPopupDescriptionSelector,
-    }
-  );
-  popup.open();
-  popup.setEventListeners();
+function handleCardClick(card) {
+  preview.open(card._name, card._link);
+  preview.setEventListeners();
 }
 
 function handleNewCardButtonClick() {
