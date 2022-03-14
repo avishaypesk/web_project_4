@@ -135,14 +135,3 @@ function handleEditFormSubmit(event) {
 
 enableValidation(config);
 cardsListSection.renderItems();
-
-export {
-  createCard,
-  renderCard,
-  enableValidation,
-  handleCardClick,
-  handleNewCardButtonClick,
-  handleNewCardFormSubmit,
-  handleEditButtonClick,
-  handleEditFormSubmit,
-};
