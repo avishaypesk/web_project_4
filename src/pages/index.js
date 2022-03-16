@@ -88,8 +88,8 @@ function enableValidation(config) {
 
 function handleCardClick(card) {
   preview.open(card._name, card._link);
-  preview.setEventListeners();
 }
+preview.setEventListeners();
 
 function handleNewCardButtonClick() {
   newCardPopup.open();
