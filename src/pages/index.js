@@ -15,10 +15,12 @@ import {
   userInputImageTitle,
   userInputImageLink,
   cardsSection,
+  editAvatarButtonElement,
 } from "../utils/constants.js";
 
 editProfileButtonElement.addEventListener("click", handleEditButtonClick);
 newCardButtonElement.addEventListener("click", handleNewCardButtonClick);
+editAvatarButtonElement.addEventListener("click", handleAvatarEditClick);
 
 export const cardsListSection = new Section(
   {
@@ -27,6 +29,14 @@ export const cardsListSection = new Section(
   },
   ".places"
 );
+
+export const profileAvatarPopup = new PopupWithForm(
+  ".form_type_profile-avatar",
+  () => {
+    console.log("submitted");
+  }
+);
+profileAvatarPopup.setEventListeners();
 
 export const profilePopup = new PopupWithForm(
   ".form_type_profile",
@@ -123,6 +133,10 @@ function handleEditFormSubmit(event) {
     title: userInputTitle.value,
   });
   profilePopup.close();
+}
+
+function handleAvatarEditClick() {
+  profileAvatarPopup.open();
 }
 
 enableValidation(config);

@@ -50,6 +50,9 @@ export const cardsSection = document.querySelector(".places");
 export const editProfileButtonElement = document.querySelector(
   ".profile__edit-button"
 );
+export const editAvatarButtonElement = document.querySelector(
+  ".profile__avatar-icon"
+);
 
 export const profileForm = document.querySelector(".form__edit-profile");
 export const newCardForm = document.querySelector(".form__new-card");

@@ -128,6 +128,33 @@
       </div>
     </div>
 
+    <div class="popup form form_type_profile-avatar">
+      <div class="form__container">
+        <button type="button" class="button popup__close-button"></button>
+        <form
+          class="form form__profile-avatar popup__form"
+          name="profileAvatarForm"
+          novalidate
+        >
+          <h3 class="form__title">Change Profile Picture</h3>
+          <input
+            type="url"
+            placeholder="Image URL"
+            id="avatar-url-input"
+            class="form__input form__input_type_avatar-title"
+            name="profileImageUrlInput"
+            required
+            minlength="1"
+          />
+          <span
+            id="profile-avatar-input-error"
+            class="form__input-error"
+          ></span>
+          <button type="submit" class="button form__save-button">Save</button>
+        </form>
+      </div>
+    </div>
+
     <div class="popup preview">
       <div class="preview__window">
         <button type="button" class="popup__close-button"></button>
