@@ -8,7 +8,6 @@ import PopupWithImage from "../scripts/PopupWithImage.js";
 import Api from "../utils/Api";
 import {
   config,
-  initialCards,
   editProfileButtonElement,
   newCardButtonElement,
   userInputName,
@@ -35,7 +34,10 @@ profileAvatarPopup.setEventListeners();
 export const profilePopup = new PopupWithForm(".form_type_profile", handleEditFormSubmit);
 profilePopup.setEventListeners();
 
-export const newCardPopup = new PopupWithForm(".form_type_new-card", handleNewCardFormSubmit);
+export const newCardPopup = new PopupWithForm(
+  ".form_type_new-card",
+  handleNewCardFormSubmit
+);
 newCardPopup.setEventListeners();
 
 export const userProfile = new UserInfo({
@@ -122,13 +124,10 @@ function handleEditButtonClick() {
   formValidators["profileForm"].resetValidation();
 }
 
-function handleEditFormSubmit(event) {
-  event.preventDefault();
-  userProfile.setUserInfo({
-    name: userInputName.value,
-    title: userInputTitle.value,
-  });
-  profilePopup.close();
+function handleEditFormSubmit({ userInputName: name, userInputTitle: about }) {
+  api
+    .updateUserInfo({ name, about })
+    .then((user) => userProfile.setUserInfo({ name: user.name, title: user.about }));
 }
 
 function handleAvatarEditClick() {

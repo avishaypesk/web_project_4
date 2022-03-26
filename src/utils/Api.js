@@ -24,4 +24,17 @@ export default class Api {
       .then(this._handleResponse)
       .catch(this._handleError);
   }
+
+  updateUserInfo({ name, about }) {
+    return fetch("https://around.nomoreparties.co/v1/group-12/users/me", {
+      method: "PATCH",
+      headers: {
+        authorization: "b21895f7-79d1-4177-9817-d22cf233df9c",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, about }),
+    })
+      .then(this._handleResponse)
+      .catch(this._handleError);
+  }
 }
