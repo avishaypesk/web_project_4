@@ -1,6 +1,6 @@
 export class Card {
   constructor(
-    { name, link },
+    { name, link, isOwner },
     {
       cardTemplateSelector,
       cardSelector,
@@ -25,48 +25,38 @@ export class Card {
 
     this._name = name;
     this._link = link;
+    this._isOwner = isOwner;
 
+    this._cardElement = this._getCardElement();
+    this._deleteButtonElement = this._cardElement.querySelector(this._deleteButtonSelector);
     this._cardTemplate = document.querySelector(this._cardTemplateSelector);
   }
 
   _getCardElement() {
-    return this._cardTemplate.content
-      .querySelector(this._cardSelector)
-      .cloneNode(true);
+    return this._cardTemplate.content.querySelector(this._cardSelector).cloneNode(true);
   }
 
   _populateCardInfo() {
-    const cardTitleElement = this._cardElement.querySelector(
-      this._imageTitleSelector
-    );
-    const cardImageElement = this._cardElement.querySelector(
-      this._imageSelector
-    );
+    const cardTitleElement = this._cardElement.querySelector(this._imageTitleSelector);
+    const cardImageElement = this._cardElement.querySelector(this._imageSelector);
     cardTitleElement.textContent = this._name;
     cardImageElement.src = this._link;
     cardImageElement.alt = this._name;
+
+    if (!this._isOwner) this._deleteButtonElement.remove();
   }
 
   _handleLikeButtonClick = () => {
     this._likeButton.classList.toggle(this._likeActiveSelector);
   };
 
-  // _handleDeleteButtonClick = () => {
-  //   this._cardElement.remove();
-  // };
-
   _setEventListeners() {
-    this._likeButton = this._cardElement.querySelector(
-      this._likeButtonSelector
-    );
+    this._likeButton = this._cardElement.querySelector(this._likeButtonSelector);
     this._likeButton.addEventListener("click", this._handleLikeButtonClick);
 
-    const deleteButton = this._cardElement.querySelector(
-      this._deleteButtonSelector
-    );
-    deleteButton.addEventListener("click", (event) =>
-      this._handleDeleteClick(event)
-    );
+    if (this._isOwner) {
+      this._deleteButtonElement.addEventListener("click", (evt) => this._handleCardClick(evt));
+    }
 
     const image = this._cardElement.querySelector(this._imageSelector);
     image.addEventListener("click", () => {
@@ -75,7 +65,6 @@ export class Card {
   }
 
   createCard() {
-    this._cardElement = this._getCardElement();
     this._populateCardInfo();
     this._setEventListeners();
     return this._cardElement;

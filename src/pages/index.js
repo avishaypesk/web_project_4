@@ -23,31 +23,19 @@ editProfileButtonElement.addEventListener("click", handleEditButtonClick);
 newCardButtonElement.addEventListener("click", handleNewCardButtonClick);
 editAvatarButtonElement.addEventListener("click", handleAvatarEditClick);
 
-export const deleteConfirmPopup = new PopupWithForm(
-  ".form_type_delete-confirm",
-  () => {
-    console.log("deleted");
-  }
-);
+export const deleteConfirmPopup = new PopupWithForm(".form_type_delete-confirm", () => {
+  console.log("deleted");
+});
 
-export const profileAvatarPopup = new PopupWithForm(
-  ".form_type_profile-avatar",
-  () => {
-    console.log("submitted");
-  }
-);
+export const profileAvatarPopup = new PopupWithForm(".form_type_profile-avatar", () => {
+  console.log("submitted");
+});
 profileAvatarPopup.setEventListeners();
 
-export const profilePopup = new PopupWithForm(
-  ".form_type_profile",
-  handleEditFormSubmit
-);
+export const profilePopup = new PopupWithForm(".form_type_profile", handleEditFormSubmit);
 profilePopup.setEventListeners();
 
-export const newCardPopup = new PopupWithForm(
-  ".form_type_new-card",
-  handleNewCardFormSubmit
-);
+export const newCardPopup = new PopupWithForm(".form_type_new-card", handleNewCardFormSubmit);
 newCardPopup.setEventListeners();
 
 export const userProfile = new UserInfo({
@@ -62,11 +50,12 @@ const preview = new PopupWithImage({
   imageTitleSelector: ".preview__description",
 });
 
-function createCard(card) {
+function createCard(card, isOwner) {
   const newCard = new Card(
     {
       name: card.name,
       link: card.link,
+      isOwner,
     },
     {
       cardTemplateSelector: "#card-template",
@@ -78,6 +67,7 @@ function createCard(card) {
       deleteButtonSelector: ".places__remove-button",
       handleCardClick,
       handleDeleteClick,
+      isOwner,
     }
   );
   return newCard.createCard();
@@ -98,7 +88,7 @@ function enableValidation(config) {
   });
 }
 
-function handleDeleteClick(event) {
+function handleDeleteClick() {
   deleteConfirmPopup.open();
 }
 
@@ -150,13 +140,18 @@ const cardsPromise = api.getInitialCards();
 const userInfoPromise = api.getUserInfo();
 Promise.all([cardsPromise, userInfoPromise])
   .then(([cards, user]) => {
-    userProfile.setUserInfo({ name: user.name, title: user.title });
+    userProfile.setUserInfo({ name: user.name, title: user.about, id: user._id });
     userProfile.setUserAvatar(user.avatar);
+
+    console.log(userProfile.getUserId());
 
     const cardsListSection = new Section(
       {
         items: cards,
-        renderer: (card) => cardsListSection.addItem(createCard(card)),
+        renderer: (card) => {
+          const isOwner = card._id == userProfile.getUserId();
+          cardsListSection.addItem(createCard(card, isOwner));
+        },
       },
       ".places"
     );
