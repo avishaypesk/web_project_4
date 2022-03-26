@@ -10,6 +10,7 @@ export class Card {
       likeActiveSelector,
       deleteButtonSelector,
       handleCardClick,
+      handleDeleteClick,
     }
   ) {
     this._cardTemplateSelector = cardTemplateSelector;
@@ -20,6 +21,7 @@ export class Card {
     this._likeActiveSelector = likeActiveSelector;
     this._deleteButtonSelector = deleteButtonSelector;
     this._handleCardClick = handleCardClick;
+    this._handleDeleteClick = handleDeleteClick;
 
     this._name = name;
     this._link = link;
@@ -49,9 +51,9 @@ export class Card {
     this._likeButton.classList.toggle(this._likeActiveSelector);
   };
 
-  _handleDeleteButtonClick = () => {
-    this._cardElement.remove();
-  };
+  // _handleDeleteButtonClick = () => {
+  //   this._cardElement.remove();
+  // };
 
   _setEventListeners() {
     this._likeButton = this._cardElement.querySelector(
@@ -62,7 +64,9 @@ export class Card {
     const deleteButton = this._cardElement.querySelector(
       this._deleteButtonSelector
     );
-    deleteButton.addEventListener("click", this._handleDeleteButtonClick);
+    deleteButton.addEventListener("click", (event) =>
+      this._handleDeleteClick(event)
+    );
 
     const image = this._cardElement.querySelector(this._imageSelector);
     image.addEventListener("click", () => {

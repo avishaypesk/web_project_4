@@ -30,6 +30,13 @@ export const cardsListSection = new Section(
   ".places"
 );
 
+export const deleteConfirmPopup = new PopupWithForm(
+  ".form_type_delete-confirm",
+  () => {
+    console.log("deleted");
+  }
+);
+
 export const profileAvatarPopup = new PopupWithForm(
   ".form_type_profile-avatar",
   () => {
@@ -76,6 +83,7 @@ function createCard(card) {
       likeButtonSelector: ".places__like-button",
       deleteButtonSelector: ".places__remove-button",
       handleCardClick,
+      handleDeleteClick,
     }
   );
   return newCard.createCard();
@@ -94,6 +102,10 @@ function enableValidation(config) {
     formValidators[formName] = validator;
     validator.enableValidation();
   });
+}
+
+function handleDeleteClick(event) {
+  deleteConfirmPopup.open();
 }
 
 function handleCardClick(card) {
