@@ -5,6 +5,7 @@ import Section from "../scripts/Section.js";
 import { Card } from "../scripts/Card.js";
 import { FormValidator } from "../scripts/FormValidator.js";
 import PopupWithImage from "../scripts/PopupWithImage.js";
+import Api from "../utils/Api";
 import {
   config,
   initialCards,
@@ -21,14 +22,6 @@ import {
 editProfileButtonElement.addEventListener("click", handleEditButtonClick);
 newCardButtonElement.addEventListener("click", handleNewCardButtonClick);
 editAvatarButtonElement.addEventListener("click", handleAvatarEditClick);
-
-export const cardsListSection = new Section(
-  {
-    items: initialCards,
-    renderer: renderCard,
-  },
-  ".places"
-);
 
 export const deleteConfirmPopup = new PopupWithForm(
   ".form_type_delete-confirm",
@@ -60,6 +53,7 @@ newCardPopup.setEventListeners();
 export const userProfile = new UserInfo({
   nameSelector: ".profile__name",
   titleSelector: ".profile__title",
+  imageSelector: ".profile__avatar",
 });
 
 const preview = new PopupWithImage({
@@ -151,5 +145,24 @@ function handleAvatarEditClick() {
   profileAvatarPopup.open();
 }
 
+const api = new Api();
+const cardsPromise = api.getInitialCards();
+const userInfoPromise = api.getUserInfo();
+Promise.all([cardsPromise, userInfoPromise])
+  .then(([cards, user]) => {
+    userProfile.setUserInfo({ name: user.name, title: user.title });
+    userProfile.setUserAvatar(user.avatar);
+
+    const cardsListSection = new Section(
+      {
+        items: cards,
+        renderer: (card) => cardsListSection.addItem(createCard(card)),
+      },
+      ".places"
+    );
+    cardsListSection.renderItems();
+  })
+  .catch((err) => console.log(err))
+  .finally(() => console.log("done"));
+
 enableValidation(config);
-cardsListSection.renderItems();
