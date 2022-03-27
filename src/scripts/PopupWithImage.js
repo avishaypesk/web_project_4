@@ -6,9 +6,7 @@ export default class PopupWithImage extends Popup {
     this._imageSelector = imageSelector;
     this._imageTitleSelector = imageTitleSelector;
     this._imageElement = this._popupElement.querySelector(this._imageSelector);
-    this._titleElement = this._popupElement.querySelector(
-      this._imageTitleSelector
-    );
+    this._titleElement = this._popupElement.querySelector(this._imageTitleSelector);
   }
 
   _populateInfo(name, link) {
@@ -18,7 +16,9 @@ export default class PopupWithImage extends Popup {
   }
 
   open(name, link) {
-    this._populateInfo(name, link);
+    this.name = name;
+    this.link = link;
+    this._populateInfo();
     super.open();
   }
 }

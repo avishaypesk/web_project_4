@@ -1,6 +1,6 @@
 export class Card {
   constructor(
-    { name, link, isOwner },
+    { name, link, isOwner, id },
     {
       cardTemplateSelector,
       cardSelector,
@@ -26,10 +26,13 @@ export class Card {
     this._name = name;
     this._link = link;
     this._isOwner = isOwner;
+    this._id = id;
 
-    this._cardElement = this._getCardElement();
-    this._deleteButtonElement = this._cardElement.querySelector(this._deleteButtonSelector);
     this._cardTemplate = document.querySelector(this._cardTemplateSelector);
+    this._cardElement = this._getCardElement();
+    this._deleteButtonElement = this._cardElement.querySelector(
+      this._deleteButtonSelector
+    );
   }
 
   _getCardElement() {
@@ -42,7 +45,6 @@ export class Card {
     cardTitleElement.textContent = this._name;
     cardImageElement.src = this._link;
     cardImageElement.alt = this._name;
-
     if (!this._isOwner) this._deleteButtonElement.remove();
   }
 
@@ -55,12 +57,14 @@ export class Card {
     this._likeButton.addEventListener("click", this._handleLikeButtonClick);
 
     if (this._isOwner) {
-      this._deleteButtonElement.addEventListener("click", (evt) => this._handleCardClick(evt));
+      this._deleteButtonElement.addEventListener("click", () =>
+        this._handleCardClick(this._id, this._cardElement)
+      );
     }
 
     const image = this._cardElement.querySelector(this._imageSelector);
     image.addEventListener("click", () => {
-      this._handleCardClick(this);
+      this._handleCardClick();
     });
   }
 

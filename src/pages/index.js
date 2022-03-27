@@ -52,6 +52,17 @@ const preview = new PopupWithImage({
   imageTitleSelector: ".preview__description",
 });
 
+const cardsListSection = new Section(
+  {
+    renderer: (card) => {
+      console.log(card._id, userProfile.getUserId());
+      const isOwner = card.owner._id == userProfile.getUserId();
+      renderCard(card, isOwner);
+    },
+  },
+  ".places"
+);
+
 function createCard(card, isOwner) {
   const newCard = new Card(
     {
@@ -69,32 +80,20 @@ function createCard(card, isOwner) {
       deleteButtonSelector: ".places__remove-button",
       handleCardClick,
       handleDeleteClick,
-      isOwner,
     }
   );
   return newCard.createCard();
 }
 
-function renderCard(card) {
-  cardsSection.prepend(createCard(card));
-}
-
-const formValidators = {};
-function enableValidation(config) {
-  const formList = Array.from(document.querySelectorAll(config.formSelector));
-  formList.forEach((form) => {
-    const validator = new FormValidator(config, form);
-    const formName = form.getAttribute("name");
-    formValidators[formName] = validator;
-    validator.enableValidation();
-  });
+function renderCard(card, isOwner) {
+  cardsListSection.addItem(createCard(card, isOwner));
 }
 
 function handleDeleteClick() {
   deleteConfirmPopup.open();
 }
 
-function handleCardClick(card) {
+function handleCardClick({ card }) {
   preview.open(card._name, card._link);
 }
 preview.setEventListeners();
@@ -134,6 +133,17 @@ function handleAvatarEditClick() {
   profileAvatarPopup.open();
 }
 
+const formValidators = {};
+function enableValidation(config) {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach((form) => {
+    const validator = new FormValidator(config, form);
+    const formName = form.getAttribute("name");
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+}
+
 const api = new Api();
 const cardsPromise = api.getInitialCards();
 const userInfoPromise = api.getUserInfo();
@@ -142,18 +152,7 @@ Promise.all([cardsPromise, userInfoPromise])
     userProfile.setUserInfo({ name: user.name, title: user.about, id: user._id });
     userProfile.setUserAvatar(user.avatar);
 
-    console.log(userProfile.getUserId());
-
-    const cardsListSection = new Section(
-      {
-        items: cards,
-        renderer: (card) => {
-          const isOwner = card._id == userProfile.getUserId();
-          cardsListSection.addItem(createCard(card, isOwner));
-        },
-      },
-      ".places"
-    );
+    cardsListSection.setItems(cards);
     cardsListSection.renderItems();
   })
   .catch((err) => console.log(err))

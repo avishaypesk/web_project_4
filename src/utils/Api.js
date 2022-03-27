@@ -1,14 +1,16 @@
 export default class Api {
-  constructor() {}
-
-  _handleResponse = (res) =>
-    res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-  _handleError = (err) => console.log(err);
+  constructor() {
+    this._handleResponse = (res) =>
+      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+    this._handleError = (err) => console.log(err);
+    this._authenticationToken = "b21895f7-79d1-4177-9817-d22cf233df9c";
+    this._rootUrl = "https://around.nomoreparties.co/v1/group-12/";
+  }
 
   getInitialCards() {
-    return fetch("https://around.nomoreparties.co/v1/group-12/cards", {
+    return fetch(`${this._rootUrl}cards`, {
       headers: {
-        authorization: "b21895f7-79d1-4177-9817-d22cf233df9c",
+        authorization: this._authenticationToken,
       },
     })
       .then(this._handleResponse)
@@ -16,9 +18,9 @@ export default class Api {
   }
 
   getUserInfo() {
-    return fetch("https://around.nomoreparties.co/v1/group-12/users/me", {
+    return fetch(`${this._rootUrl}users/me`, {
       headers: {
-        authorization: "b21895f7-79d1-4177-9817-d22cf233df9c",
+        authorization: this._authenticationToken,
       },
     })
       .then(this._handleResponse)
@@ -26,13 +28,50 @@ export default class Api {
   }
 
   updateUserInfo({ name, about }) {
-    return fetch("https://around.nomoreparties.co/v1/group-12/users/me", {
+    return fetch(`${this._rootUrl}users/me`, {
       method: "PATCH",
       headers: {
-        authorization: "b21895f7-79d1-4177-9817-d22cf233df9c",
+        authorization: this._authenticationToken,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ name, about }),
+    })
+      .then(this._handleResponse)
+      .catch(this._handleError);
+  }
+
+  updateUserImage(avatar) {
+    return fetch(`${this._rootUrl}users/me/avatar`, {
+      method: "PATCH",
+      headers: {
+        authorization: this._authenticationToken,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ avatar }),
+    })
+      .then(this._handleResponse)
+      .catch(this._handleError);
+  }
+
+  submitNewCard({ name, link }) {
+    return fetch(`${this._rootUrl}users/me`, {
+      method: "POST",
+      headers: {
+        authorization: this._authenticationToken,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, link }),
+    })
+      .then(this._handleResponse)
+      .catch(this._handleError);
+  }
+
+  deleteCard(cardId) {
+    return fetch(`${this._rootUrl}cards/${cardId}`, {
+      method: "DELETE",
+      headers: {
+        authorization: this._authenticationToken,
+      },
     })
       .then(this._handleResponse)
       .catch(this._handleError);
