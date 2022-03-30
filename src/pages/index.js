@@ -6,7 +6,7 @@ import { Card } from "../scripts/Card.js";
 import { FormValidator } from "../scripts/FormValidator.js";
 import PopupWithImage from "../scripts/PopupWithImage.js";
 import Api from "../utils/Api";
-import ConfirmPopup from "../components/ConfirmPopup";
+import ConfirmPopup from "../scripts/ConfirmPopup";
 import {
   config,
   editProfileButtonElement,
@@ -15,7 +15,6 @@ import {
   userInputTitle,
   userInputImageTitle,
   userInputImageLink,
-  cardsSection,
   editAvatarButtonElement,
 } from "../utils/constants.js";
 
@@ -104,7 +103,7 @@ function handleLikeClick(cardId, liked, card) {
 }
 
 function renderCard(card, isOwner, id, likeCount, likedByOwner) {
-  section.addItem(createCard(card, isOwner, id, likeCount, likedByOwner));
+  cardsListSection.addItem(createCard(card, isOwner, id, likeCount, likedByOwner));
 }
 
 function handleDeleteClick(cardId, cardElement) {
@@ -115,13 +114,13 @@ function handleDeleteConfirm(cardId, cardElement) {
   api.deleteCard(cardId).then(() => cardElement.remove());
 }
 
-function handleCardClick({ card }) {
+function handleCardClick(card) {
   preview.open(card._name, card._link);
 }
 preview.setEventListeners();
 
 function handleAvatarSubmit({ profileImageUrlInput: url }) {
-  api.updateUserImage(url).then(() => userProfile.setUserImage(url));
+  api.updateUserImage(url).then(() => userProfile.setUserAvatar(url));
 }
 
 function handleNewCardButtonClick() {
@@ -130,8 +129,7 @@ function handleNewCardButtonClick() {
 }
 
 function handleNewCardFormSubmit(cardValues) {
-  const { newCardFormImageTitleInput: name, newCardFormImageLinkInput: link } =
-    cardValues;
+  const { newCardName: name, newCardLink: link } = cardValues;
   api.submitNewCard({ name, link }).then((card) => renderCard(card, true, card._id));
 }
 
@@ -143,7 +141,7 @@ function handleEditButtonClick() {
   formValidators["profileForm"].resetValidation();
 }
 
-function handleEditFormSubmit({ userInputName: name, userInputTitle: about }) {
+function handleEditFormSubmit({ profileName: name, profileTitle: about }) {
   api
     .updateUserInfo({ name, about })
     .then((user) => userProfile.setUserInfo({ name: user.name, title: user.about }));

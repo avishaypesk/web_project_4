@@ -54,7 +54,7 @@ export default class Api {
   }
 
   submitNewCard({ name, link }) {
-    return fetch(`${this._rootUrl}users/me`, {
+    return fetch(`${this._rootUrl}/cards`, {
       method: "POST",
       headers: {
         authorization: this._authenticationToken,

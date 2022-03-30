@@ -39,6 +39,8 @@ export class Card {
     this._deleteButtonElement = this._cardElement.querySelector(
       this._deleteButtonSelector
     );
+    this._likeCountElement = this._cardElement.querySelector(this._likeCountSelector);
+    this._likeButton = this._cardElement.querySelector(this._likeButtonSelector);
   }
 
   _getCardElement() {
@@ -67,7 +69,6 @@ export class Card {
   }
 
   _setEventListeners() {
-    this._likeButton = this._cardElement.querySelector(this._likeButtonSelector);
     this._likeButton.addEventListener("click", () =>
       this._handleLikeClick(
         this._id,
@@ -83,14 +84,14 @@ export class Card {
     }
 
     const image = this._cardElement.querySelector(this._imageSelector);
-    image.addEventListener("click", (event) => {
-      this._handleCardClick(event);
+    image.addEventListener("click", () => {
+      this._handleCardClick(this);
     });
   }
 
   createCard() {
-    this._populateCardInfo();
     this._setEventListeners();
+    this._populateCardInfo();
     return this._cardElement;
   }
 }

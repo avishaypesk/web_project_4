@@ -21,6 +21,6 @@ export default class UserInfo {
   getUserId = () => this._userId;
 
   setUserAvatar(url) {
-    this._imageElement.style.backgroundImage = `url("${url})`;
+    this._imageElement.style.backgroundImage = `url("${url}")`;
   }
 }

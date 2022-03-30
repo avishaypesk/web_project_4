@@ -50,8 +50,10 @@
         <img src=" " alt="" class="places__image" />
         <div class="places__bottom">
           <h2 class="places__title"></h2>
-          <button type="button" class="button places__like-button"></button>
-          <span class="places__like-count"></span>
+          <div class="places__like-section">
+            <button type="button" class="button places__like-button"></button>
+            <span class="places__like-count"></span>
+          </div>
         </div>
       </article>
     </template>
@@ -130,13 +132,13 @@
           <input
             type="url"
             placeholder="Image URL"
-            id="avatar-url-input"
-            class="form__input form__input_type_avatar-title"
+            id="profile-avatar-url-input"
+            class="form__input form__input_type_avatar-url"
             name="profileImageUrlInput"
             required
             minlength="1"
           />
-          <span id="profile-avatar-input-error" class="form__input-error"></span>
+          <span id="profile-avatar-url-input-error" class="form__input-error"></span>
           <button type="submit" class="button form__save-button">Save</button>
         </form>
       </div>
