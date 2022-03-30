@@ -1,6 +1,6 @@
 export class Card {
   constructor(
-    { name, link, isOwner, id },
+    { name, link, isOwner, id, likeCount = 0, likedByOwner = false },
     {
       cardTemplateSelector,
       cardSelector,
@@ -11,6 +11,8 @@ export class Card {
       deleteButtonSelector,
       handleCardClick,
       handleDeleteClick,
+      handleLikeClick,
+      likeCountSelector,
     }
   ) {
     this._cardTemplateSelector = cardTemplateSelector;
@@ -22,11 +24,15 @@ export class Card {
     this._deleteButtonSelector = deleteButtonSelector;
     this._handleCardClick = handleCardClick;
     this._handleDeleteClick = handleDeleteClick;
+    this._handleLikeClick = handleLikeClick;
+    this._likeCountSelector = likeCountSelector;
 
     this._name = name;
     this._link = link;
     this._isOwner = isOwner;
     this._id = id;
+    this._likeCount = likeCount;
+    this._likedByOwner = likedByOwner;
 
     this._cardTemplate = document.querySelector(this._cardTemplateSelector);
     this._cardElement = this._getCardElement();
@@ -46,25 +52,39 @@ export class Card {
     cardImageElement.src = this._link;
     cardImageElement.alt = this._name;
     if (!this._isOwner) this._deleteButtonElement.remove();
+    if (this._likedByOwner) this._likeButton.classList.add(this._likeActiveSelector);
+    this.updateLikeCount(this._likeCount);
   }
 
-  _handleLikeButtonClick = () => {
-    this._likeButton.classList.toggle(this._likeActiveSelector);
-  };
+  updateLikeCount(likes) {
+    this._likeCount = likes;
+    this._toggleLikeCount(this._likeCount > 0);
+  }
+
+  _toggleLikeCount(display) {
+    this._likeCountElement.style.display = display ? "block" : "none";
+    this._likeCountElement.textContent = this._likeCount;
+  }
 
   _setEventListeners() {
     this._likeButton = this._cardElement.querySelector(this._likeButtonSelector);
-    this._likeButton.addEventListener("click", this._handleLikeButtonClick);
+    this._likeButton.addEventListener("click", () =>
+      this._handleLikeClick(
+        this._id,
+        this._likeButton.classList.toggle(this._likeActiveSelector),
+        this
+      )
+    );
 
     if (this._isOwner) {
       this._deleteButtonElement.addEventListener("click", () =>
-        this._handleCardClick(this._id, this._cardElement)
+        this._handleDeleteClick(this._id, this._cardElement)
       );
     }
 
     const image = this._cardElement.querySelector(this._imageSelector);
-    image.addEventListener("click", () => {
-      this._handleCardClick();
+    image.addEventListener("click", (event) => {
+      this._handleCardClick(event);
     });
   }
 

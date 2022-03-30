@@ -41,6 +41,7 @@
 @import url(../blocks/places/__remove-button/places__remove-button.css);
 @import url(../blocks/places/__like-button/places__like-button.css);
 @import url(../blocks/places/__like-button/_active/places__like-button_active.css);
+@import url(../blocks/places/__like-count/places__like-count.css);
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__paragraph/footer__paragraph.css);

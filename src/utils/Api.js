@@ -76,4 +76,26 @@ export default class Api {
       .then(this._handleResponse)
       .catch(this._handleError);
   }
+
+  increaseLikeCount(cardId) {
+    return fetch(`${this._rootUrl}cards/likes/${cardId}`, {
+      method: "PUT",
+      headers: {
+        authorization: this._authenticationToken,
+      },
+    })
+      .then(this._handleResponse)
+      .catch(this._handleError);
+  }
+
+  reduceLikeCount(cardId) {
+    return fetch(`${this._rootUrl}cards/likes/${cardId}`, {
+      method: "DELETE",
+      headers: {
+        authorization: this._authenticationToken,
+      },
+    })
+      .then(this._handleResponse)
+      .catch(this._handleError);
+  }
 }

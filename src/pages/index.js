@@ -6,6 +6,7 @@ import { Card } from "../scripts/Card.js";
 import { FormValidator } from "../scripts/FormValidator.js";
 import PopupWithImage from "../scripts/PopupWithImage.js";
 import Api from "../utils/Api";
+import ConfirmPopup from "../components/ConfirmPopup";
 import {
   config,
   editProfileButtonElement,
@@ -22,13 +23,15 @@ editProfileButtonElement.addEventListener("click", handleEditButtonClick);
 newCardButtonElement.addEventListener("click", handleNewCardButtonClick);
 editAvatarButtonElement.addEventListener("click", handleAvatarEditClick);
 
-export const deleteConfirmPopup = new PopupWithForm(".form_type_delete-confirm", () => {
-  console.log("deleted");
-});
+export const deleteConfirmPopup = new ConfirmPopup(
+  ".form_type_delete-confirm",
+  handleDeleteConfirm
+);
 
-export const profileAvatarPopup = new PopupWithForm(".form_type_profile-avatar", () => {
-  console.log("submitted");
-});
+export const profileAvatarPopup = new PopupWithForm(
+  ".form_type_profile-avatar",
+  handleAvatarSubmit
+);
 profileAvatarPopup.setEventListeners();
 
 export const profilePopup = new PopupWithForm(".form_type_profile", handleEditFormSubmit);
@@ -55,20 +58,24 @@ const preview = new PopupWithImage({
 const cardsListSection = new Section(
   {
     renderer: (card) => {
-      console.log(card._id, userProfile.getUserId());
       const isOwner = card.owner._id == userProfile.getUserId();
-      renderCard(card, isOwner);
+      const cardLikes = card.likes.length;
+      const likedByOwner = card.likes.some((user) => user._id == userProfile.getUserId());
+      renderCard(card, isOwner, card._id, cardLikes, likedByOwner);
     },
   },
   ".places"
 );
 
-function createCard(card, isOwner) {
+function createCard(card, isOwner, id, likeCount, likedByOwner) {
   const newCard = new Card(
     {
       name: card.name,
       link: card.link,
       isOwner,
+      id,
+      likeCount,
+      likedByOwner,
     },
     {
       cardTemplateSelector: "#card-template",
@@ -78,19 +85,34 @@ function createCard(card, isOwner) {
       likeActiveSelector: "places__like-button_active",
       likeButtonSelector: ".places__like-button",
       deleteButtonSelector: ".places__remove-button",
+      likeCountSelector: ".places__like-count",
       handleCardClick,
       handleDeleteClick,
+      handleLikeClick,
     }
   );
   return newCard.createCard();
 }
 
-function renderCard(card, isOwner) {
-  cardsListSection.addItem(createCard(card, isOwner));
+function handleLikeClick(cardId, liked, card) {
+  const updateLikeCounts = (res) => card.updateLikeCount(res.likes.length);
+  if (liked) {
+    api.increaseLikeCount(cardId).then(updateLikeCounts);
+  } else {
+    api.reduceLikeCount(cardId).then(updateLikeCounts);
+  }
 }
 
-function handleDeleteClick() {
-  deleteConfirmPopup.open();
+function renderCard(card, isOwner, id, likeCount, likedByOwner) {
+  section.addItem(createCard(card, isOwner, id, likeCount, likedByOwner));
+}
+
+function handleDeleteClick(cardId, cardElement) {
+  deleteConfirmPopup.open(cardId, cardElement);
+}
+
+function handleDeleteConfirm(cardId, cardElement) {
+  api.deleteCard(cardId).then(() => cardElement.remove());
 }
 
 function handleCardClick({ card }) {
@@ -98,21 +120,19 @@ function handleCardClick({ card }) {
 }
 preview.setEventListeners();
 
+function handleAvatarSubmit({ profileImageUrlInput: url }) {
+  api.updateUserImage(url).then(() => userProfile.setUserImage(url));
+}
+
 function handleNewCardButtonClick() {
   newCardPopup.open();
   formValidators["newCardForm"].resetValidation();
 }
 
-function handleNewCardFormSubmit(event) {
-  event.preventDefault();
-  const card = {
-    name: userInputImageTitle.value,
-    link: userInputImageLink.value,
-  };
-  userInputImageTitle.value = "";
-  userInputImageLink.value = "";
-  cardsListSection.addItem(createCard(card));
-  newCardPopup.close();
+function handleNewCardFormSubmit(cardValues) {
+  const { newCardFormImageTitleInput: name, newCardFormImageLinkInput: link } =
+    cardValues;
+  api.submitNewCard({ name, link }).then((card) => renderCard(card, true, card._id));
 }
 
 function handleEditButtonClick() {
