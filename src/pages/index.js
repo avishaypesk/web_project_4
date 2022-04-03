@@ -1,12 +1,12 @@
 import "../pages/index.css";
-import PopupWithForm from "../scripts/PopupWithForm.js";
-import UserInfo from "../scripts/UserInfo.js";
-import Section from "../scripts/Section.js";
-import { Card } from "../scripts/Card.js";
-import { FormValidator } from "../scripts/FormValidator.js";
-import PopupWithImage from "../scripts/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
+import Section from "../components/Section.js";
+import { Card } from "../components/Card.js";
+import { FormValidator } from "../components/FormValidator.js";
+import PopupWithImage from "../components/PopupWithImage.js";
 import Api from "../utils/Api";
-import ConfirmPopup from "../scripts/ConfirmPopup";
+import ConfirmPopup from "../components/ConfirmPopup";
 import {
   config,
   editProfileButtonElement,
@@ -27,19 +27,25 @@ export const deleteConfirmPopup = new ConfirmPopup(
   handleDeleteConfirm
 );
 
-export const profileAvatarPopup = new PopupWithForm(
-  ".form_type_profile-avatar",
-  handleAvatarSubmit
-);
+export const profileAvatarPopup = new PopupWithForm(".form_type_profile-avatar", {
+  handleSubmit: handleAvatarSubmit,
+  buttonText: "Save",
+  loadingButtonText: "Saving...",
+});
 profileAvatarPopup.setEventListeners();
 
-export const profilePopup = new PopupWithForm(".form_type_profile", handleEditFormSubmit);
+export const profilePopup = new PopupWithForm(".form_type_profile", {
+  handleSubmit: handleEditFormSubmit,
+  buttonText: "Save",
+  loadingButtonText: "Saving...",
+});
 profilePopup.setEventListeners();
 
-export const newCardPopup = new PopupWithForm(
-  ".form_type_new-card",
-  handleNewCardFormSubmit
-);
+export const newCardPopup = new PopupWithForm(".form_type_new-card", {
+  handleSubmit: handleNewCardFormSubmit,
+  buttonText: "Create",
+  loadingButtonText: "Saving...",
+});
 newCardPopup.setEventListeners();
 
 export const userProfile = new UserInfo({
@@ -58,22 +64,21 @@ const cardsListSection = new Section(
   {
     renderer: (card) => {
       const isOwner = card.owner._id == userProfile.getUserId();
-      const cardLikes = card.likes.length;
-      const likedByOwner = card.likes.some((user) => user._id == userProfile.getUserId());
-      renderCard(card, isOwner, card._id, cardLikes, likedByOwner);
+      const cardLikes = card.likes;
+      renderCard(card, isOwner, card._id, cardLikes, islikedByOwner);
     },
   },
   ".places"
 );
 
-function createCard(card, isOwner, id, likeCount, likedByOwner) {
+function createCard(card, isOwner, id, likes, likedByOwner) {
   const newCard = new Card(
     {
       name: card.name,
       link: card.link,
       isOwner,
       id,
-      likeCount,
+      likes,
       likedByOwner,
     },
     {
@@ -93,17 +98,29 @@ function createCard(card, isOwner, id, likeCount, likedByOwner) {
   return newCard.createCard();
 }
 
+function islikedByOwner(likes) {
+  return likes.some((user) => user._id == userProfile.getUserId());
+}
+
 function handleLikeClick(cardId, liked, card) {
-  const updateLikeCounts = (res) => card.updateLikeCount(res.likes.length);
+  const updateLikes = (res) => {
+    card.updateLikes(res.likes);
+  };
   if (liked) {
-    api.increaseLikeCount(cardId).then(updateLikeCounts);
+    api
+      .increaseLikeCount(cardId)
+      .then(updateLikes)
+      .catch((err) => console.log(`Error.....: ${err}`));
   } else {
-    api.reduceLikeCount(cardId).then(updateLikeCounts);
+    api
+      .reduceLikeCount(cardId)
+      .then(updateLikes)
+      .catch((err) => console.log(`Error.....: ${err}`));
   }
 }
 
-function renderCard(card, isOwner, id, likeCount, likedByOwner) {
-  cardsListSection.addItem(createCard(card, isOwner, id, likeCount, likedByOwner));
+function renderCard(card, isOwner, id, likes, likedByOwner) {
+  cardsListSection.addItem(createCard(card, isOwner, id, likes, likedByOwner));
 }
 
 function handleDeleteClick(cardId, cardElement) {
@@ -111,7 +128,10 @@ function handleDeleteClick(cardId, cardElement) {
 }
 
 function handleDeleteConfirm(cardId, cardElement) {
-  api.deleteCard(cardId).then(() => cardElement.remove());
+  api
+    .deleteCard(cardId)
+    .then(() => cardElement.remove())
+    .catch((err) => console.log(`Error.....: ${err}`));
 }
 
 function handleCardClick(card) {
@@ -120,7 +140,17 @@ function handleCardClick(card) {
 preview.setEventListeners();
 
 function handleAvatarSubmit({ profileImageUrlInput: url }) {
-  api.updateUserImage(url).then(() => userProfile.setUserAvatar(url));
+  profileAvatarPopup.showLoading();
+  api
+    .updateUserImage(url)
+    .then(() => userProfile.setUserAvatar(url))
+    .catch((err) => console.log(`Error.....: ${err}`))
+    .then(() => {
+      profileAvatarPopup.hideLoading();
+    })
+    .finally(() => {
+      profileAvatarPopup.close();
+    });
 }
 
 function handleNewCardButtonClick() {
@@ -130,7 +160,17 @@ function handleNewCardButtonClick() {
 
 function handleNewCardFormSubmit(cardValues) {
   const { newCardName: name, newCardLink: link } = cardValues;
-  api.submitNewCard({ name, link }).then((card) => renderCard(card, true, card._id));
+  newCardPopup.showLoading();
+  api
+    .submitNewCard({ name, link })
+    .then((card) => renderCard(card, true, card._id, card.likes))
+    .catch((err) => console.log(`Error.....: ${err}`))
+    .then(() => {
+      newCardPopup.hideLoading();
+    })
+    .finally(() => {
+      newCardPopup.close();
+    });
 }
 
 function handleEditButtonClick() {
@@ -142,9 +182,17 @@ function handleEditButtonClick() {
 }
 
 function handleEditFormSubmit({ profileName: name, profileTitle: about }) {
+  profilePopup.showLoading();
   api
     .updateUserInfo({ name, about })
-    .then((user) => userProfile.setUserInfo({ name: user.name, title: user.about }));
+    .then((user) => userProfile.setUserInfo({ name: user.name, title: user.about }))
+    .catch((err) => console.log(`Error.....: ${err}`))
+    .then(() => {
+      profilePopup.hideLoading();
+    })
+    .finally(() => {
+      profilePopup.close();
+    });
 }
 
 function handleAvatarEditClick() {
@@ -162,7 +210,10 @@ function enableValidation(config) {
   });
 }
 
-const api = new Api();
+const api = new Api({
+  authenticationToken: "b21895f7-79d1-4177-9817-d22cf233df9c",
+  rootUrl: "https://around.nomoreparties.co/v1/group-12/",
+});
 const cardsPromise = api.getInitialCards();
 const userInfoPromise = api.getUserInfo();
 Promise.all([cardsPromise, userInfoPromise])

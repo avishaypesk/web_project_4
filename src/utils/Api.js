@@ -1,10 +1,10 @@
 export default class Api {
-  constructor() {
+  constructor({ authenticationToken, rootUrl }) {
     this._handleResponse = (res) =>
       res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
     this._handleError = (err) => console.log(err);
-    this._authenticationToken = "b21895f7-79d1-4177-9817-d22cf233df9c";
-    this._rootUrl = "https://around.nomoreparties.co/v1/group-12/";
+    this._authenticationToken = authenticationToken;
+    this._rootUrl = rootUrl;
   }
 
   getInitialCards() {
@@ -54,7 +54,7 @@ export default class Api {
   }
 
   submitNewCard({ name, link }) {
-    return fetch(`${this._rootUrl}/cards`, {
+    return fetch(`${this._rootUrl}cards`, {
       method: "POST",
       headers: {
         authorization: this._authenticationToken,

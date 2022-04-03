@@ -1,6 +1,6 @@
 export class Card {
   constructor(
-    { name, link, isOwner, id, likeCount = 0, likedByOwner = false },
+    { name, link, isOwner, id, likes, likedByOwner },
     {
       cardTemplateSelector,
       cardSelector,
@@ -31,7 +31,7 @@ export class Card {
     this._link = link;
     this._isOwner = isOwner;
     this._id = id;
-    this._likeCount = likeCount;
+    this._likes = likes;
     this._likedByOwner = likedByOwner;
 
     this._cardTemplate = document.querySelector(this._cardTemplateSelector);
@@ -54,18 +54,32 @@ export class Card {
     cardImageElement.src = this._link;
     cardImageElement.alt = this._name;
     if (!this._isOwner) this._deleteButtonElement.remove();
-    if (this._likedByOwner) this._likeButton.classList.add(this._likeActiveSelector);
-    this.updateLikeCount(this._likeCount);
+    this.updateLikes(this._likes);
   }
 
-  updateLikeCount(likes) {
-    this._likeCount = likes;
-    this._toggleLikeCount(this._likeCount > 0);
+  updateLikes(likes) {
+    this._likes = likes;
+    this._renderLikes();
   }
 
-  _toggleLikeCount(display) {
-    this._likeCountElement.style.display = display ? "block" : "none";
-    this._likeCountElement.textContent = this._likeCount;
+  _isLiked() {
+    return this._likedByOwner(this._likes);
+  }
+
+  _getLikesCount() {
+    return this._likes.length;
+  }
+
+  _renderLikes() {
+    const likesCount = this._getLikesCount();
+    this._likeCountElement.style.display = likesCount > 0 ? "block" : "none";
+    this._likeCountElement.textContent = likesCount;
+
+    if (this._isLiked()) {
+      this._likeButton.classList.add(this._likeActiveSelector);
+    } else {
+      this._likeButton.classList.remove(this._likeActiveSelector);
+    }
   }
 
   _setEventListeners() {
