@@ -1,10 +1,12 @@
 import Popup from "./Popup";
 
 export default class ConfirmPopup extends Popup {
-  constructor(popupSelector, handleSubmit) {
+  constructor(popupSelector, { handleSubmit, buttonText, loadingButtonText }) {
     super(popupSelector);
     this._popupElement = document.querySelector(popupSelector);
     this._handleSubmit = handleSubmit;
+    this._buttonText = buttonText;
+    this._loadingButtonText = loadingButtonText;
     this._submitButton = this._popupElement.querySelector(".form__save-button");
   }
 
@@ -20,6 +22,14 @@ export default class ConfirmPopup extends Popup {
     this._handleSubmit(this._cardId, this._cardElement);
     this.close();
   };
+
+  showLoading() {
+    this._submitButton.textContent = this._loadingButtonText;
+  }
+
+  hideLoading() {
+    this._submitButton.textContent = this._buttonText;
+  }
 
   setEventListeners() {
     super.setEventListeners();

@@ -22,10 +22,11 @@ editProfileButtonElement.addEventListener("click", handleEditButtonClick);
 newCardButtonElement.addEventListener("click", handleNewCardButtonClick);
 editAvatarButtonElement.addEventListener("click", handleAvatarEditClick);
 
-export const deleteConfirmPopup = new ConfirmPopup(
-  ".form_type_delete-confirm",
-  handleDeleteConfirm
-);
+export const deleteConfirmPopup = new ConfirmPopup(".form_type_delete-confirm", {
+  handleSubmit: handleDeleteConfirm,
+  buttonText: "Save",
+  loadingButtonText: "Saving...",
+});
 
 export const profileAvatarPopup = new PopupWithForm(".form_type_profile-avatar", {
   handleSubmit: handleAvatarSubmit,
@@ -122,10 +123,12 @@ function handleDeleteClick(cardId, cardElement) {
 }
 
 function handleDeleteConfirm(cardId, cardElement) {
+  deleteConfirmPopup.showLoading();
   api
     .deleteCard(cardId)
     .then(() => cardElement.remove())
-    .catch(api.handleError);
+    .catch(api.handleError)
+    .finally(() => deleteConfirmPopup.hideLoading());
 }
 
 function handleCardClick(card) {
@@ -137,14 +140,12 @@ function handleAvatarSubmit({ profileImageUrlInput: url }) {
   profileAvatarPopup.showLoading();
   api
     .updateUserImage(url)
-    .then(() => userProfile.setUserAvatar(url))
-    .catch(api.handleError)
     .then(() => {
-      profileAvatarPopup.hideLoading();
-    })
-    .finally(() => {
+      userProfile.setUserAvatar(url);
       profileAvatarPopup.close();
-    });
+    })
+    .catch(api.handleError)
+    .finally(() => profileAvatarPopup.hideLoading());
 }
 
 function handleNewCardButtonClick() {
@@ -159,10 +160,8 @@ function handleNewCardFormSubmit(cardValues) {
     .submitNewCard({ name, link })
     .then((card) => renderCard(card, true, card._id, card.likes))
     .catch(api.handleError)
-    .then(() => {
-      newCardPopup.hideLoading();
-    })
     .finally(() => {
+      newCardPopup.hideLoading();
       newCardPopup.close();
     });
 }
@@ -181,10 +180,8 @@ function handleEditFormSubmit({ profileName: name, profileTitle: about }) {
     .updateUserInfo({ name, about })
     .then((user) => userProfile.setUserInfo({ name: user.name, title: user.about }))
     .catch(api.handleError)
-    .then(() => {
-      profilePopup.hideLoading();
-    })
     .finally(() => {
+      profilePopup.hideLoading();
       profilePopup.close();
     });
 }
