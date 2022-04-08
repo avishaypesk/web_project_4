@@ -2,7 +2,7 @@ export default class Api {
   constructor({ authenticationToken, rootUrl }) {
     this._handleResponse = (res) =>
       res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-    this._handleError = (err) => console.log(err);
+    this.handleError = (err) => console.log(err);
     this._authenticationToken = authenticationToken;
     this._rootUrl = rootUrl;
   }
@@ -12,9 +12,7 @@ export default class Api {
       headers: {
         authorization: this._authenticationToken,
       },
-    })
-      .then(this._handleResponse)
-      .catch(this._handleError);
+    }).then(this._handleResponse);
   }
 
   getUserInfo() {
@@ -22,9 +20,7 @@ export default class Api {
       headers: {
         authorization: this._authenticationToken,
       },
-    })
-      .then(this._handleResponse)
-      .catch(this._handleError);
+    }).then(this._handleResponse);
   }
 
   updateUserInfo({ name, about }) {
@@ -35,9 +31,7 @@ export default class Api {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ name, about }),
-    })
-      .then(this._handleResponse)
-      .catch(this._handleError);
+    }).then(this._handleResponse);
   }
 
   updateUserImage(avatar) {
@@ -48,9 +42,7 @@ export default class Api {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ avatar }),
-    })
-      .then(this._handleResponse)
-      .catch(this._handleError);
+    }).then(this._handleResponse);
   }
 
   submitNewCard({ name, link }) {
@@ -61,9 +53,8 @@ export default class Api {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ name, link }),
-    })
-      .then(this._handleResponse)
-      .catch(this._handleError);
+    }).then(this._handleResponse);
+    x;
   }
 
   deleteCard(cardId) {
@@ -72,9 +63,7 @@ export default class Api {
       headers: {
         authorization: this._authenticationToken,
       },
-    })
-      .then(this._handleResponse)
-      .catch(this._handleError);
+    }).then(this._handleResponse);
   }
 
   increaseLikeCount(cardId) {
@@ -83,9 +72,7 @@ export default class Api {
       headers: {
         authorization: this._authenticationToken,
       },
-    })
-      .then(this._handleResponse)
-      .catch(this._handleError);
+    }).then(this._handleResponse);
   }
 
   reduceLikeCount(cardId) {
@@ -94,8 +81,6 @@ export default class Api {
       headers: {
         authorization: this._authenticationToken,
       },
-    })
-      .then(this._handleResponse)
-      .catch(this._handleError);
+    }).then(this._handleResponse);
   }
 }

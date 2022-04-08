@@ -107,15 +107,9 @@ function handleLikeClick(cardId, liked, card) {
     card.updateLikes(res.likes);
   };
   if (liked) {
-    api
-      .increaseLikeCount(cardId)
-      .then(updateLikes)
-      .catch((err) => console.log(`Error.....: ${err}`));
+    api.increaseLikeCount(cardId).then(updateLikes).catch(api.handleError);
   } else {
-    api
-      .reduceLikeCount(cardId)
-      .then(updateLikes)
-      .catch((err) => console.log(`Error.....: ${err}`));
+    api.reduceLikeCount(cardId).then(updateLikes).catch(api.handleError);
   }
 }
 
@@ -131,7 +125,7 @@ function handleDeleteConfirm(cardId, cardElement) {
   api
     .deleteCard(cardId)
     .then(() => cardElement.remove())
-    .catch((err) => console.log(`Error.....: ${err}`));
+    .catch(api.handleError);
 }
 
 function handleCardClick(card) {
@@ -144,7 +138,7 @@ function handleAvatarSubmit({ profileImageUrlInput: url }) {
   api
     .updateUserImage(url)
     .then(() => userProfile.setUserAvatar(url))
-    .catch((err) => console.log(`Error.....: ${err}`))
+    .catch(api.handleError)
     .then(() => {
       profileAvatarPopup.hideLoading();
     })
@@ -164,7 +158,7 @@ function handleNewCardFormSubmit(cardValues) {
   api
     .submitNewCard({ name, link })
     .then((card) => renderCard(card, true, card._id, card.likes))
-    .catch((err) => console.log(`Error.....: ${err}`))
+    .catch(api.handleError)
     .then(() => {
       newCardPopup.hideLoading();
     })
@@ -186,7 +180,7 @@ function handleEditFormSubmit({ profileName: name, profileTitle: about }) {
   api
     .updateUserInfo({ name, about })
     .then((user) => userProfile.setUserInfo({ name: user.name, title: user.about }))
-    .catch((err) => console.log(`Error.....: ${err}`))
+    .catch(api.handleError)
     .then(() => {
       profilePopup.hideLoading();
     })
@@ -214,8 +208,9 @@ const api = new Api({
   authenticationToken: "b21895f7-79d1-4177-9817-d22cf233df9c",
   rootUrl: "https://around.nomoreparties.co/v1/group-12/",
 });
-const cardsPromise = api.getInitialCards();
-const userInfoPromise = api.getUserInfo();
+const cardsPromise = api.getInitialCards().catch(api.handleError);
+const userInfoPromise = api.getUserInfo().catch(api.handleError);
+
 Promise.all([cardsPromise, userInfoPromise])
   .then(([cards, user]) => {
     userProfile.setUserInfo({ name: user.name, title: user.about, id: user._id });
