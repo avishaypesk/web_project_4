@@ -14,7 +14,6 @@ export default class ConfirmPopup extends Popup {
     super.open();
     this._cardId = cardId;
     this._cardElement = cardElement;
-    this.setEventListeners();
   }
 
   _handleConfirmClick = (event) => {

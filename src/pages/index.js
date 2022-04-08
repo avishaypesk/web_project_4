@@ -27,6 +27,7 @@ export const deleteConfirmPopup = new ConfirmPopup(".form_type_delete-confirm", 
   buttonText: "Save",
   loadingButtonText: "Saving...",
 });
+deleteConfirmPopup.setEventListeners();
 
 export const profileAvatarPopup = new PopupWithForm(".form_type_profile-avatar", {
   handleSubmit: handleAvatarSubmit,
@@ -158,11 +159,13 @@ function handleNewCardFormSubmit(cardValues) {
   newCardPopup.showLoading();
   api
     .submitNewCard({ name, link })
-    .then((card) => renderCard(card, true, card._id, card.likes))
+    .then((card) => {
+      renderCard(card, true, card._id, card.likes, islikedByOwner);
+      newCardPopup.close();
+    })
     .catch(api.handleError)
     .finally(() => {
       newCardPopup.hideLoading();
-      newCardPopup.close();
     });
 }
 
@@ -178,11 +181,13 @@ function handleEditFormSubmit({ profileName: name, profileTitle: about }) {
   profilePopup.showLoading();
   api
     .updateUserInfo({ name, about })
-    .then((user) => userProfile.setUserInfo({ name: user.name, title: user.about }))
+    .then((user) => {
+      userProfile.setUserInfo({ name: user.name, title: user.about });
+      profilePopup.close();
+    })
     .catch(api.handleError)
     .finally(() => {
       profilePopup.hideLoading();
-      profilePopup.close();
     });
 }
 
