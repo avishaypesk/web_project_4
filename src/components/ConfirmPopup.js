@@ -19,7 +19,6 @@ export default class ConfirmPopup extends Popup {
   _handleConfirmClick = (event) => {
     event.preventDefault();
     this._handleSubmit(this._cardId, this._cardElement);
-    this.close();
   };
 
   showLoading() {
@@ -33,10 +32,5 @@ export default class ConfirmPopup extends Popup {
   setEventListeners() {
     super.setEventListeners();
     this._submitButton.addEventListener("click", this._handleConfirmClick);
-  }
-
-  close() {
-    super.close();
-    this._submitButton.removeEventListener("click", this._handleConfirmClick);
   }
 }

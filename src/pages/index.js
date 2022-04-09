@@ -127,7 +127,10 @@ function handleDeleteConfirm(cardId, cardElement) {
   deleteConfirmPopup.showLoading();
   api
     .deleteCard(cardId)
-    .then(() => cardElement.remove())
+    .then(() => {
+      cardElement.remove();
+      deleteConfirmPopup.close();
+    })
     .catch(api.handleError)
     .finally(() => deleteConfirmPopup.hideLoading());
 }
