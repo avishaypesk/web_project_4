@@ -13,8 +13,6 @@ import {
   newCardButtonElement,
   userInputName,
   userInputTitle,
-  userInputImageTitle,
-  userInputImageLink,
   editAvatarButtonElement,
 } from "../utils/constants.js";
 
@@ -24,8 +22,8 @@ editAvatarButtonElement.addEventListener("click", handleAvatarEditClick);
 
 export const deleteConfirmPopup = new ConfirmPopup(".form_type_delete-confirm", {
   handleSubmit: handleDeleteConfirm,
-  buttonText: "Save",
-  loadingButtonText: "Saving...",
+  buttonText: "Delete",
+  loadingButtonText: "Deleting...",
 });
 deleteConfirmPopup.setEventListeners();
 
